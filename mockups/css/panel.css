@@ -495,3 +495,31 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .rstage.is-now { background: var(--accent-bg); color: var(--accent-text); box-shadow: inset 0 0 0 1px var(--accent); }
 .rstage.is-done { background: var(--green-bg); color: var(--green); }
 .stu-link { font-weight: 700; color: var(--text-heading); }
+
+/* ---------- home (admin-home.html) ---------- */
+.home-stats a.card { text-decoration: none; color: inherit; }
+.home-stats a.card:hover { box-shadow: var(--shadow-soft); }
+.todo { list-style: none; margin: 0; padding: 0; }
+.todo > li { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid var(--line); }
+.todo > li:first-child { border-top: 0; }
+.todo b { display: block; color: var(--text-heading); }
+.todo small { display: block; color: var(--muted); font-size: 13px; }
+.todo__ic { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--navy-50); color: var(--navy-600); font-weight: 700; }
+.todo--hot { box-shadow: inset 4px 0 0 var(--accent); }
+.todo--hot .todo__ic { background: var(--accent); color: var(--navy-800); }
+.todo > li.is-done { opacity: .55; }
+.todo > li.is-done b { text-decoration: line-through; }
+.hruns { list-style: none; margin: 0; padding: 0; }
+.hruns a { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 20px; border-top: 1px solid var(--line); color: inherit; text-decoration: none; }
+.hruns li:first-child a { border-top: 0; }
+.hruns a:hover { background: var(--navy-50); }
+.hruns small { display: block; color: var(--muted); font-size: 13px; }
+.hruns__date { display: grid; justify-items: center; padding: 6px 4px; border-radius: var(--radius); background: var(--navy-800); color: #fff; font-size: 12px; text-transform: uppercase; }
+.hruns__date b { font: 400 20px/1.1 var(--font-display); }
+.bar { display: block; height: 6px; margin-top: 6px; border-radius: 3px; background: var(--navy-50); overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--accent); }
+.hdates { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; }
+.hdates li { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 10px; }
+.hdates time { font-weight: 700; color: var(--text-heading); }
+.hdates li.is-key time { color: var(--accent-text); }
+@media (max-width: 599px) { .todo > li { grid-template-columns: 28px minmax(0, 1fr); padding: 12px 16px; } .todo > li > :last-child { grid-column: 2; justify-self: start; } .hruns a { grid-template-columns: 56px minmax(0, 1fr); padding: 12px 16px; } .hruns .rstage { grid-column: 2; justify-self: start; } }

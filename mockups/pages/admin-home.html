@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Главная — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="home" data-user="study" data-view="study">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → Главная: «what to do today», built around the main job of the panel — students, documents, certificates,
+     ФИС ФРДО (user, 2026-11-19). The page differs by role: study office — students and documents; manager — confirmations,
+     specialists, courses; admin — plus security and the exchange with the sites. Blocks carry data-for="study manager admin";
+     the demo switch at the bottom changes <body data-view>. Every number and task agrees with the other mockups
+     (run master 27–28.11, run advanced 23–24.10, queue, log). Today in the mockups = 19.11.2026. -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs">Четверг, 19 ноября 2026</p>
+      <h1 data-hello>Добрый день</h1>
+      <p class="muted" style="margin:4px 0 0" data-hello-sub>Учебная часть: что сделать сегодня по курсантам и документам.</p>
+    </div>
+  </div>
+
+  <div class="grid grid--4 home-stats" style="margin-bottom:20px">
+    <a class="card stat stat--accent" href="admin-runs.html"><b>4</b><span>запуска в работе</span></a>
+    <a class="card stat" href="admin-students-all.html"><b>16</b><span>курсантов в списке (пример)</span></a>
+    <a class="card stat" href="admin-run-adv.html"><b>15</b><span>готовы к выгрузке в ФИС ФРДО</span></a>
+    <a class="card stat" data-for="manager admin" href="admin-queue.html"><b>3</b><span>ждут подтверждения</span></a>
+    <a class="card stat" data-for="study" href="admin-run-master.html"><b>8 дней</b><span>до мастер-курса</span></a>
+  </div>
+
+  <div class="grid grid--side">
+    <div class="grid">
+      <!-- tasks -->
+      <section class="card" aria-labelledby="hTodo">
+        <div class="card__head"><div><h2 id="hTodo">Нужно сделать</h2><p class="muted">Сначала срочное. Задача уходит сама, когда дело сделано.</p></div><span class="badge badge--warn" data-todo-count></span></div>
+        <ol class="todo">
+          <li data-for="study admin" class="todo--hot"><span class="todo__ic" aria-hidden="true">!</span><div><b>Проверить документы курсантов — 2</b><small>Мастер-курс 27–28.11 · Борисова (СНИЛС, диплом), Дмитриева (диплом, смена фамилии) · загружены вчера</small></div><a class="btn btn--accent btn--sm" href="admin-run-master.html">Проверить</a></li>
+          <li data-for="study admin" class="todo--hot"><span class="todo__ic" aria-hidden="true">!</span><div><b>Подписать протокол итоговой аттестации</b><small>Продвинутый курс 23–24.10 · на подписи с 18.11 · без него не выдать 17 удостоверений</small></div><a class="btn btn--outline btn--sm" href="admin-run-adv.html">К документам</a></li>
+          <li data-for="study admin"><span class="todo__ic" aria-hidden="true">↻</span><div><b>Напомнить о документах — 2 курсанта</b><small>Мастер-курс · Григорьев, Иванов (диплом возвращён 17.11) · до курса 8 дней</small></div><button class="btn btn--outline btn--sm" type="button" data-todo-done data-toast="Напоминания отправлены — письмо и отметка в кабинете">Напомнить</button></li>
+          <li data-for="study admin"><span class="todo__ic" aria-hidden="true">⇪</span><div><b>ФИС ФРДО: собрать файл для 15 готовых</b><small>Продвинутый курс 23–24.10 · 2 не готовы (Иванов — диплом, Ершова — СНИЛС)</small></div><a class="btn btn--outline btn--sm" href="admin-run-adv.html">Открыть</a></li>
+          <li data-for="study manager admin"><span class="todo__ic" aria-hidden="true">₽</span><div><b>2 заявки ждут оплаты</b><small>Мастер-курс · Козлов, Лебедев · место не закреплено; автоотмена — за N дней до курса (настройка)</small></div><button class="btn btn--outline btn--sm" type="button" data-todo-done data-toast="Письмо-напоминание об оплате отправлено">Напомнить</button></li>
+          <li data-for="study admin"><span class="todo__ic" aria-hidden="true">✎</span><div><b>Приказ о зачислении — мастер-курс</b><small>сформировать после окончания оплаты, к 24.11</small></div><a class="btn btn--outline btn--sm" href="admin-run-master.html">К документам</a></li>
+          <li data-for="manager admin" class="todo--hot"><span class="todo__ic" aria-hidden="true">!</span><div><b>Подтвердить правки — 3</b><small>Черевцов В. Н.: фото и регалии · новое место от ассистента Ольги К. (возможный дубль)</small></div><a class="btn btn--accent btn--sm" href="admin-queue.html">К очереди</a></li>
+          <li data-for="manager admin"><span class="todo__ic" aria-hidden="true">✎</span><div><b>Программа базового курса 19–20.12 не готова</b><small>запись идёт, 6 оплачено · программа — копия сентябрьской, докладчики не подтверждены</small></div><a class="btn btn--outline btn--sm" href="admin-program.html">К программе</a></li>
+          <li data-for="manager admin"><span class="todo__ic" aria-hidden="true">◌</span><div><b>Карточки менторов без фото — 2</b><small>Кетов М. С., Кузнецов В. В. · на сайтах выйдут без фото</small></div><a class="btn btn--outline btn--sm" href="admin-specialists.html">К специалистам</a></li>
+          <li data-for="admin"><span class="todo__ic" aria-hidden="true">⚠</span><div><b>Отказы в доступе за 3 дня — 3</b><small>врач открыл чужую карточку · ключ RF без права записи · 5 неудачных входов</small></div><a class="btn btn--outline btn--sm" href="admin-log.html">К журналу</a></li>
+        </ol>
+      </section>
+
+      <!-- runs in progress -->
+      <section class="card" aria-labelledby="hRuns">
+        <div class="card__head"><h2 id="hRuns">Запуски в работе</h2><a class="linkbtn" href="admin-runs.html">все запуски</a></div>
+        <ul class="hruns">
+          <li><a href="admin-run-master.html"><span class="hruns__date"><b>27–28</b>ноя</span><span><b>Мастер-курс</b><small>10 из 18 оплачено · документы 6 из 10 приняты · через 8 дней</small><span class="bar" aria-hidden="true"><span style="width:60%"></span></span></span><span class="rstage is-now">документы курсантов</span></a></li>
+          <li><a href="admin-run-adv.html"><span class="hruns__date"><b>23–24</b>окт</span><span><b>Продвинутый курс</b><small>17 из 18 аттестованы · документы 3 из 8 · ФИС ФРДО не отправлено</small><span class="bar" aria-hidden="true"><span style="width:40%"></span></span></span><span class="rstage is-now">протокол на подписи</span></a></li>
+          <li><a href="admin-runs.html"><span class="hruns__date"><b>19–20</b>дек</span><span><b>Базовый курс</b><small>6 из 18 оплачено · программа в работе</small><span class="bar" aria-hidden="true"><span style="width:33%"></span></span></span><span class="rstage">идёт запись</span></a></li>
+          <li><a href="admin-runs.html"><span class="hruns__date"><b>5–6</b>мар</span><span><b>Ортопедия стопы от «А» до «Я»</b><small>1 заявка ждёт оплаты · г. Жуковский</small><span class="bar" aria-hidden="true"><span style="width:5%"></span></span></span><span class="rstage">идёт запись</span></a></li>
+        </ul>
+      </section>
+    </div>
+
+    <aside class="grid" aria-label="Сводка">
+      <!-- dates -->
+      <section class="card"><div class="card__head"><h2>Ближайшие даты</h2></div><div class="card__body">
+        <ol class="hdates">
+          <li><time>24.11</time><span>приказ о зачислении — мастер-курс</span></li>
+          <li class="is-key"><time>27–28.11</time><span>мастер-курс · ГКБ № 67 · посещение отмечается в панели</span></li>
+          <li><time>01.12</time><span>ФИС ФРДО — продвинутый курс (срок — предложение)</span></li>
+          <li class="is-key"><time>19–20.12</time><span>базовый курс</span></li>
+        </ol>
+      </div></section>
+
+      <!-- feed -->
+      <section class="card"><div class="card__head"><h2>Новое за сутки</h2><a class="linkbtn" href="admin-log.html" data-for="admin">журнал</a></div><div class="card__body">
+        <ol class="sc-ev">
+          <li class="ev--doc" data-for="study admin"><span class="sc-ev__ic" aria-hidden="true">↑</span><span><time>18.11, 21:14</time><a href="admin-students-all.html#borisova">Борисова Е. В.</a> загрузила СНИЛС и диплом</span></li>
+          <li class="ev--doc" data-for="study admin"><span class="sc-ev__ic" aria-hidden="true">↑</span><span><time>18.11, 19:02</time><a href="admin-students-all.html#dmitrieva">Дмитриева О. А.</a> загрузила диплом и свидетельство о браке</span></li>
+          <li class="ev--order"><span class="sc-ev__ic" aria-hidden="true">+</span><span><time>18.11, 16:40</time><a href="admin-students-all.html#lebedev">Лебедев С. Ю.</a> записался на базовый курс 19–20.12</span></li>
+          <li class="ev--doc" data-for="manager admin"><span class="sc-ev__ic" aria-hidden="true">✎</span><span><time>19.11, 08:52</time>Черевцов В. Н. предложил правки своей карточки</span></li>
+          <li class="ev--doc" data-for="manager admin"><span class="sc-ev__ic" aria-hidden="true">+</span><span><time>18.11, 17:40</time>Ольга К. предложила новое место</span></li>
+          <li class="ev--ok" data-for="admin"><span class="sc-ev__ic" aria-hidden="true">✓</span><span><time>19.11, 03:00</time>Ночная сверка с сайтами — расхождений нет</span></li>
+        </ol>
+      </div></section>
+
+      <!-- year -->
+      <section class="card"><div class="card__head"><h2>2026 год</h2><span class="muted">пример</span></div><div class="card__body">
+        <dl class="kv">
+          <div><dt>Запусков прошло</dt><dd>6</dd></div>
+          <div><dt>Курсантов обучено</dt><dd>89</dd></div>
+          <div><dt>Удостоверений выдано</dt><dd>86</dd></div>
+          <div><dt>Передано в ФИС ФРДО</dt><dd>71 · ещё 15 к выгрузке</dd></div>
+        </dl>
+        <p class="hint" style="margin:10px 0 0">Общие цифры позже пойдут на сайт ИХС (facts 2026-10-23).</p>
+      </div></section>
+    </aside>
+  </div>
+</main>
+</div>
+
+<div class="demo-dock" role="group" aria-label="Демо: главная для роли">
+  <span>Демо — главная для:</span>
+  <button class="chip" type="button" data-view-set="study" aria-pressed="true">учебной части</button>
+  <button class="chip" type="button" data-view-set="manager" aria-pressed="false">менеджера</button>
+  <button class="chip" type="button" data-view-set="admin" aria-pressed="false">админа</button>
+</div>
+
+<script src="../js/panel.js"></script>
+<script>
+/* Главная: role views (demo). Blocks with data-for are shown only for the listed roles. */
+(function () {
+  var V = {
+    study: { hello: 'Добрый день', sub: 'Учебная часть: что сделать сегодня по курсантам и документам.', name: 'Петрова А.', role: 'учебная часть', ini: 'ПА' },
+    manager: { hello: 'Добрый день', sub: 'Менеджер: подтверждения, специалисты, курсы и программы.', name: 'Смирнова Ирина', role: 'менеджер', ini: 'ИС' },
+    admin: { hello: 'Добрый день', sub: 'Админ: всё, включая безопасность и обмен с сайтами.', name: 'Администратор', role: 'админ', ini: 'АД' }
+  };
+  function setView(v) {
+    document.body.setAttribute('data-view', v);
+    document.querySelectorAll('[data-for]').forEach(function (el) { el.hidden = (' ' + el.getAttribute('data-for') + ' ').indexOf(' ' + v + ' ') < 0; });
+    document.querySelectorAll('[data-view-set]').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-view-set') === v ? 'true' : 'false'); });
+    document.querySelector('[data-hello]').textContent = V[v].hello; document.querySelector('[data-hello-sub]').textContent = V[v].sub;
+    var u = document.querySelector('.p-user'); if (u) { u.querySelector('b').textContent = V[v].name; u.querySelector('small').textContent = V[v].role; u.querySelector('.p-ava').textContent = V[v].ini; }
+    count();
+  }
+  function count() { var n = [].filter.call(document.querySelectorAll('.todo > li'), function (li) { return !li.hidden && !li.classList.contains('is-done'); }).length; document.querySelector('[data-todo-count]').textContent = n ? n + ' задач' : 'всё сделано'; }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-view-set]'); if (b) setView(b.getAttribute('data-view-set'));
+    var d = e.target.closest('[data-todo-done]'); if (d) { d.closest('li').classList.add('is-done'); d.disabled = true; d.textContent = 'Сделано'; count(); }
+  });
+  setView('study');
+})();
+</script>
+</body>
+</html>

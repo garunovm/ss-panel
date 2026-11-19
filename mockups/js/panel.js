@@ -32,7 +32,7 @@
   var MENU = {
     admin: [
       { title: 'Работа', items: [
-        { id: 'home', t: 'Главная', i: 'home', href: '#' },
+        { id: 'home', t: 'Главная', i: 'home', href: 'admin-home.html' },
         { id: 'queue', t: 'На подтверждение', i: 'queue', href: 'admin-queue.html', badge: '3' }
       ] },
       { title: 'Институт', items: [
