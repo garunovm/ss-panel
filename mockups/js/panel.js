@@ -45,7 +45,7 @@
         { id: 'dicts', t: 'Списки значений', i: 'dict', href: 'admin-dicts.html' }
       ] },
       { title: 'Система', items: [
-        { id: 'users', t: 'Пользователи и роли', i: 'users', href: '#' },
+        { id: 'users', t: 'Пользователи и роли', i: 'users', href: 'admin-users.html' },
         { id: 'api', t: 'Сайты и ключи API', i: 'api', href: '#' },
         { id: 'log', t: 'Журнал', i: 'log', href: '#' }
       ] }
@@ -60,7 +60,8 @@
   };
   var USER = {
     admin: { ini: 'ИС', name: 'Смирнова Ирина', role: 'менеджер' },
-    doctor: { ini: 'ЧВ', name: 'Черевцов В. Н.', role: 'врач', img: '../img/cherevcov.jpg' }
+    doctor: { ini: 'ЧВ', name: 'Черевцов В. Н.', role: 'врач', img: '../img/cherevcov.jpg' },
+    sysadmin: { ini: 'АД', name: 'Администратор', role: 'админ' } // admin-only screens: <body data-user="sysadmin">
   };
   var app = document.body.getAttribute('data-app') || 'admin';
   var page = document.body.getAttribute('data-page');
@@ -79,7 +80,7 @@
   }
   var head = document.querySelector('[data-shell="head"]');
   if (head) {
-    var u = USER[app];
+    var u = USER[document.body.getAttribute('data-user') || app];
     var ava = function (x) { return '<span class="p-ava">' + (x.img ? '<img src="' + x.img + '" alt="">' : x.ini) + '</span>'; };
     head.outerHTML = '<div class="p-pilot">Макет панели (пилот): данные — примеры; программа — по реальной программе продвинутого курса 23–24 октября 2026.</div>' +
       '<header class="p-head"><div class="p-head__left">' +

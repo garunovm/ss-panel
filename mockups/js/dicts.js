@@ -4,6 +4,7 @@
   - [data-row-toggle]           table row: opens/closes the edit row right below it (tr.row-edit)
   - [data-row-add="tplId"]      adds a new row from <template id="tplId"> at the top, open, focused
   - [data-row-save]             copies [data-bind=x] values to [data-show=x] of the row, closes, toast
+  - [data-role-select]          user form: shows [data-for-role~=role] fields, updates [data-role-section]
   - ul[data-dict]               values: drag or ↑/↓ to reorder, «Изменить» edits in place, «В архив»,
                                 the input [data-dict-new] + Enter / «Добавить» adds a value
   Used values are archived, not deleted: cards, courses and site orders refer to them.
@@ -18,8 +19,15 @@
     if (open === undefined) open = ed.hidden;
     ed.hidden = !open; tr.classList.toggle('is-editing', open);
     tr.querySelectorAll('[data-row-toggle]').forEach(function (b) { b.setAttribute('aria-expanded', open ? 'true' : 'false'); b.textContent = open ? 'Свернуть' : 'Изменить'; });
-    if (open) { var f = ed.querySelector('input,select,textarea'); if (f) f.focus(); }
+    if (open) { syncRole(ed); var f = ed.querySelector('input,select,textarea'); if (f) f.focus(); }
   }
+  var SECTION = { admin: 'admin.*', manager: 'admin.*', study: 'admin.*', doctor: 'doctor.*', assistant: 'doctor.*' };
+  function syncRole(scope) {
+    var sel = scope.querySelector('[data-role-select]'); if (!sel) return;
+    scope.querySelectorAll('[data-for-role]').forEach(function (x) { x.hidden = (' ' + x.getAttribute('data-for-role') + ' ').indexOf(' ' + sel.value + ' ') < 0; });
+    var s = scope.querySelector('[data-role-section]'); if (s) s.textContent = SECTION[sel.value];
+  }
+  document.addEventListener('change', function (e) { if (e.target.matches('[data-role-select]')) syncRole(e.target.closest('[data-role-form]')); });
   document.addEventListener('click', function (e) {
     var t;
     if ((t = e.target.closest('[data-row-toggle]'))) { toggle(t); return; }
