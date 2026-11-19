@@ -383,3 +383,49 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .log-det { margin-top: 8px; }
 .log-det summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--link); min-height: 28px; }
 .log-det .diff { margin-top: 8px; }
+
+/* ---------- students of a run (admin-students.html, js/students.js) ---------- */
+.pipe { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.pipe li { position: relative; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+.pipe b { display: block; font: 400 24px/1.1 var(--font-display); color: var(--text-heading); }
+.pipe span { font-size: 13px; color: var(--muted); }
+.pipe small { display: block; font-size: 12px; color: var(--muted); }
+.pipe .is-done { background: var(--green-bg); border-color: transparent; }
+.pipe .is-now { background: var(--accent-bg); border-color: var(--accent); box-shadow: inset 0 -3px 0 var(--accent); }
+@media (max-width: 1099px) { .pipe { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 599px) { .pipe { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.table tr.is-bad td:first-child { box-shadow: inset 4px 0 0 var(--red); }
+.dks { display: flex; flex-wrap: wrap; gap: 4px; }
+.dk { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.dk > span:not(.vh) { font-weight: 400; }
+.dk--ok { background: var(--green-bg); color: var(--green); }
+.dk--check { background: var(--blue-50); color: var(--blue-700); }
+.dk--bad { background: var(--red-bg); color: var(--red); }
+.dk--none { background: var(--navy-50); color: var(--muted); }
+.stu-edit { padding: 6px 20px 16px; }
+.dchecks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.dcheck { display: grid; gap: 8px; align-content: start; padding: 12px 14px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+.dcheck__head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.dcheck__body { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
+.dcheck__file { flex: none; display: grid; place-items: center; width: 64px; height: 80px; border-radius: 6px; background: var(--navy-50); border: 1px dashed var(--line-strong); font-size: 11px; text-align: center; color: var(--muted); }
+.dcheck__note { margin: 0; padding: 8px 10px; border-radius: 6px; background: var(--red-bg); color: var(--red); font-size: 13px; }
+.dcheck__acts { display: flex; flex-wrap: wrap; gap: 6px; }
+.dcheck__reason { display: grid; gap: 6px; }
+.stu-edit .row-form__foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+@media (max-width: 899px) { .dchecks { grid-template-columns: minmax(0, 1fr); } .stu-edit { padding: 6px 12px 14px; } }
+
+/* ---------- students registry (admin-students-all.html) ---------- */
+.reg-filters { align-items: flex-end; }
+.rf-sel { display: grid; gap: 3px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.rf-sel .select { min-width: 150px; width: auto; }
+.crs { display: flex; flex-wrap: wrap; gap: 4px; max-width: 420px; }
+.cr { display: inline-flex; align-items: baseline; gap: 4px; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.cr small { font-weight: 400; }
+.cr--done { background: var(--navy-50); color: var(--navy-600); }
+.cr--paid { background: var(--amber-100); color: var(--amber-700); }
+.cr--wait { background: #fff; color: var(--muted); border: 1px dashed var(--line-strong); }
+.reg-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 20px; }
+.reg-card h3 { margin: 0 0 8px; }
+.reg-card .table th, .reg-card .table td { padding: 8px 10px; }
+.reg-empty { margin: 0; padding: 24px; text-align: center; color: var(--muted); }
+@media (max-width: 999px) { .reg-card { grid-template-columns: minmax(0, 1fr); } }
