@@ -5,6 +5,9 @@
                      (the student sees it in the site cabinet «Документы слушателя» and gets an e-mail)
   - [data-reg-filter]  registry of all students (admin-students-all.html): search + course / year / specialty /
                        city selects + quick chips [data-rtag]; all combine (AND); «Сбросить фильтры»
+  - #att [data-day]     run documents (admin-run-docs.html): attendance -> attestation («не допущен» if a day is missed)
+  - [data-rdoc]         documents in the legal order: «Сформировать» -> «Отправить на подпись» -> «Подписать ЭЦП»;
+                        signing a document opens the next step
   Row open/close is dicts.js ([data-row-toggle]).
 */
 (function () {
@@ -70,4 +73,41 @@
     });
     apply();
   }
+
+  /* run documents: attendance -> attestation */
+  var att = document.getElementById('att');
+  if (att) att.addEventListener('change', function (e) {
+    var cb = e.target.closest('[data-day]'); if (!cb) return;
+    var tr = cb.closest('tr'), d = tr.querySelectorAll('[data-day]'), miss = [].filter.call(d, function (x) { return !x.checked; }).map(function (x) { return x.getAttribute('data-day'); });
+    var b = tr.querySelector('[data-att]'), c = tr.querySelector('[data-cert]');
+    if (miss.length) { b.className = 'badge badge--bad'; b.textContent = 'не допущен — пропущен день ' + miss.join(', '); c.dataset.was = c.dataset.was || c.innerHTML; c.innerHTML = '<span class="muted">—</span>'; tr.classList.add('is-bad'); }
+    else { b.className = 'badge badge--ok'; b.textContent = 'зачёт'; c.innerHTML = c.dataset.was && c.dataset.was.indexOf('№') > -1 ? c.dataset.was : '<span class="badge badge--warn">номер будет присвоен</span>'; tr.classList.remove('is-bad'); }
+    var ok = [].filter.call(att.querySelectorAll('tbody tr'), function (r) { return !r.classList.contains('is-bad'); }).length;
+    var pl = document.querySelectorAll('.pipe li'); pl[3].querySelector('b').textContent = ok + ' из ' + att.querySelectorAll('tbody tr').length; pl[4].querySelector('b').textContent = ok;
+    window.panelToast('Отмечено. Ведомость и протокол пересоберутся из отметок.');
+  });
+
+  /* run documents: legal order */
+  var BTN = {
+    ready: '<button class="btn btn--outline btn--sm" type="button" data-toast="Макет: скачается DOCX для проверки">Скачать DOCX</button><button class="btn btn--primary btn--sm" type="button" data-doc-sign>Отправить на подпись</button>',
+    sign: '<button class="btn btn--outline btn--sm" type="button" data-toast="Макет: откроется PDF">Открыть</button><button class="btn btn--accent btn--sm" type="button" data-doc-signed>Подписать ЭЦП</button>',
+    signed: '<button class="btn btn--outline btn--sm" type="button" data-toast="Макет: откроется подписанный PDF">Открыть</button>',
+    draft: '<button class="btn btn--primary btn--sm" type="button" data-doc-make>Сформировать</button>'
+  };
+  var LBL = { ready: ['badge--blue', '● сформирован'], sign: ['badge--warn', '◐ на подписи'], signed: ['badge--ok', '✓ подписан ЭЦП'], draft: ['badge', 'можно формировать'] };
+  function setDoc(li, st, when) {
+    var b = li.querySelector('[data-rdoc-st]'); b.className = 'badge ' + LBL[st][0]; b.textContent = LBL[st][1];
+    li.querySelector('[data-rdoc-when]').textContent = when; li.querySelector('.rdoc__act').innerHTML = BTN[st];
+    var f = li.querySelector('.rdoc__act button:last-child'); if (f) f.focus();
+  }
+  document.addEventListener('click', function (e) {
+    var li = e.target.closest('[data-rdoc]'); if (!li) return;
+    if (e.target.closest('[data-doc-make]')) { setDoc(li, 'ready', 'сформирован сейчас из шаблона'); window.panelToast('Сформирован из шаблона Word — проверьте и отправьте на подпись.'); }
+    else if (e.target.closest('[data-doc-sign]')) { setDoc(li, 'sign', 'отправлен на подпись сейчас'); window.panelToast('Отправлен на подпись руководителю.'); }
+    else if (e.target.closest('[data-doc-signed]')) {
+      setDoc(li, 'signed', 'подписан сейчас');
+      var next = li.nextElementSibling; if (next && /ждёт/.test(next.querySelector('[data-rdoc-st]').textContent)) setDoc(next, 'draft', 'предыдущий шаг подписан');
+      window.panelToast('Подписано ЭЦП. Следующий шаг открыт.');
+    }
+  });
 })();
