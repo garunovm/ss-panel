@@ -35,10 +35,9 @@
         { id: 'home', t: 'Главная', i: 'home', href: '#' },
         { id: 'queue', t: 'На подтверждение', i: 'queue', href: 'admin-queue.html', badge: '3' }
       ] },
-      { title: 'Курсанты', items: [
-        { id: 'students', t: 'Курсанты', i: 'students', href: 'admin-students-all.html', badge: '3' },
-        { id: 'rundocs', t: 'Документы запуска', i: 'docs', href: 'admin-run-docs.html' },
-        { id: 'frdo', t: 'Удостоверения и ФИС ФРДО', i: 'cert', href: 'admin-frdo.html' }
+      { title: 'Институт', items: [
+        { id: 'students', t: 'Курсанты', i: 'students', href: 'admin-students-all.html' },
+        { id: 'runs', t: 'Запуск курсов', i: 'docs', href: 'admin-runs.html', badge: '4' }
       ] },
       { title: 'Специалисты', items: [
         { id: 'specialists', t: 'Специалисты', i: 'people', href: 'admin-specialists.html' },
@@ -142,7 +141,7 @@
     var tbl = document.querySelector(bar.getAttribute('data-filter'));
     var search = document.querySelector('[data-search="' + bar.getAttribute('data-filter') + '"]');
     var count = document.querySelector('[data-count="' + bar.getAttribute('data-filter') + '"]');
-    var tag = '';
+    var pressed = bar.querySelector('[data-tag][aria-pressed="true"]'), tag = pressed ? pressed.getAttribute('data-tag') : ''; // start from the pressed chip
     var apply = function () {
       var q = search ? search.value.trim().toLowerCase() : '', n = 0;
       tbl.querySelectorAll('tbody tr:not(.row-edit):not(.log-day)').forEach(function (tr) {

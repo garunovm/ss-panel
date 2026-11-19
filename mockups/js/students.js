@@ -1,14 +1,15 @@
 /*
-  ИХС panel mockups — students of a run (admin-students.html).
+  ИХС panel mockups — students of a run (admin-run-master.html).
   - [data-doc-ok]    accept a document → badge «✓ принято», the row's pill turns green
   - [data-doc-ret]   opens the reason; [data-doc-send] returns the document with the reason
                      (the student sees it in the site cabinet «Документы слушателя» and gets an e-mail)
-  - [data-reg-filter]  registry of all students (admin-students-all.html): search + course / year / specialty /
-                       city selects + quick chips [data-rtag]; all combine (AND); «Сбросить фильтры»
-  - #att [data-day]     run documents (admin-run-docs.html): attendance -> attestation («не допущен» if a day is missed)
+  - #reg                registry of all students (admin-students-all.html): all / new / old + run, course, year,
+                       specialty, city + quick chips — all combine; a row opens the student card in the right
+                       side panel (#stuCard) from window.STUDENTS; #id in the address opens that card
+  - #att [data-day]     run documents (admin-run-adv.html): attendance -> attestation («не допущен» if a day is missed)
   - [data-rdoc]         documents in the legal order: «Сформировать» -> «Отправить на подпись» -> «Подписать ЭЦП»;
                         signing a document opens the next step
-  - [data-frdo-build]   ФИС ФРДО batch (admin-frdo.html): build file for ready rows -> «отправлено» -> «принято»
+  - [data-frdo-build]   ФИС ФРДО batch (admin-run-adv.html): build file for ready rows -> «отправлено» -> «принято»
   Row open/close is dicts.js ([data-row-toggle]).
 */
 (function () {
@@ -46,33 +47,87 @@
     }
   });
 
-  /* registry filters */
+  /* registry: filters (all / new / old, run, course, year, specialty, city, quick chips) — all combine */
   var reg = document.getElementById('reg');
   if (reg) {
-    var rtag = '';
+    var rtag = '', kind = '';
     var val = function (k) { var e = document.querySelector('[data-rf="' + k + '"]'); return e ? e.value.trim() : ''; };
     var has = function (tr, attr, v) { return !v || (' ' + tr.getAttribute(attr) + ' ').indexOf(' ' + v + ' ') > -1; };
+    var DATA = window.STUDENTS || {};
     var apply = function () {
-      var q = val('q').toLowerCase(), n = 0;
-      reg.querySelectorAll(':scope > tbody > tr:not(.row-edit)').forEach(function (tr) {
-        var ok = has(tr, 'data-courses', val('course')) && has(tr, 'data-years', val('year')) && has(tr, 'data-spec', val('spec')) &&
-          (!val('city') || tr.getAttribute('data-city') === val('city')) && has(tr, 'data-tags', rtag) &&
-          (!q || (tr.textContent + tr.nextElementSibling.textContent).toLowerCase().indexOf(q) > -1);
-        tr.hidden = !ok; if (!ok) tr.nextElementSibling.hidden = true; if (ok) n++;
+      var q = val('q').toLowerCase(), n = 0, all = reg.querySelectorAll(':scope > tbody > tr');
+      all.forEach(function (tr) {
+        var d = DATA[tr.getAttribute('data-id')] || { runs: [] };
+        var hay = (tr.textContent + ' ' + d.runs.map(function (r) { return r.order + ' ' + r.cert; }).join(' ')).toLowerCase();
+        var ok = has(tr, 'data-runs', val('run')) && has(tr, 'data-courses', val('course')) && has(tr, 'data-years', val('year')) && has(tr, 'data-spec', val('spec')) &&
+          (!val('city') || tr.getAttribute('data-city') === val('city')) && has(tr, 'data-tags', rtag) && has(tr, 'data-tags', kind) && (!q || hay.indexOf(q) > -1);
+        tr.hidden = !ok; if (ok) n++;
       });
-      document.querySelector('[data-rf-count]').textContent = 'Показано: ' + n + ' из ' + reg.querySelectorAll(':scope > tbody > tr:not(.row-edit)').length;
+      document.querySelector('[data-rf-count]').textContent = 'Показано: ' + n + ' из ' + all.length;
       document.querySelector('[data-rf-empty]').hidden = n > 0;
     };
+    var press = function (box, attr, b) { box.querySelectorAll('[' + attr + ']').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); };
     document.querySelectorAll('[data-rf]').forEach(function (e) { e.addEventListener(e.tagName === 'SELECT' ? 'change' : 'input', apply); });
-    document.querySelector('[data-rf-chips]').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-rtag]'); if (!b) return; rtag = b.getAttribute('data-rtag');
-      this.querySelectorAll('[data-rtag]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); apply();
-    });
+    document.querySelector('[data-rf-chips]').addEventListener('click', function (e) { var b = e.target.closest('[data-rtag]'); if (!b) return; rtag = b.getAttribute('data-rtag'); press(this, 'data-rtag', b); apply(); });
+    document.querySelector('[data-rf-kind]').addEventListener('click', function (e) { var b = e.target.closest('[data-kind]'); if (!b) return; kind = b.getAttribute('data-kind'); press(this, 'data-kind', b); apply(); });
     document.querySelector('[data-rf-reset]').addEventListener('click', function () {
       document.querySelectorAll('[data-rf]').forEach(function (e) { e.value = ''; });
-      rtag = ''; document.querySelectorAll('[data-rtag]').forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-rtag') === '' ? 'true' : 'false'); }); apply();
+      rtag = ''; kind = '';
+      press(document.querySelector('[data-rf-chips]'), 'data-rtag', document.querySelector('[data-rtag=""]'));
+      press(document.querySelector('[data-rf-kind]'), 'data-kind', document.querySelector('[data-kind=""]'));
+      apply();
     });
     apply();
+
+    /* student card in the right side panel */
+    var card = document.getElementById('stuCard'), back = document.querySelector('[data-card-close]'), opener = null;
+    var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+    var DOCL = { ok: ['dk--ok', '✓ приняты'], check: ['dk--check', '● на проверке'], bad: ['dk--bad', '✕ нужно исправить'], none: ['dk--none', '— не загружены'] };
+    var RS = { done: ['cr--done', 'прошёл'], paid: ['cr--paid', 'записан'], wait: ['cr--wait', 'ждёт оплаты'], cancel: ['cr--cancel', 'отменена'] };
+    var FRL = { sent: '<span class="badge badge--ok">передано</span>', ready: '<span class="badge badge--warn">к выгрузке</span>', no: '<span class="badge badge--bad">нет удостоверения</span>', '-': '<span class="muted">—</span>' };
+    var EV = { order: ['+', 'ev--order'], pay: ['₽', 'ev--pay'], doc: ['↑', 'ev--doc'], ok: ['✓', 'ev--ok'], course: ['★', 'ev--course'], cert: ['№', 'ev--cert'], frdo: ['⇪', 'ev--frdo'], cancel: ['✕', 'ev--cancel'] };
+    var openCard = function (id, from) {
+      var d = DATA[id]; if (!d) return;
+      var ini = d.n.split(' ').slice(0, 2).map(function (w) { return w[0]; }).join('');
+      card.innerHTML =
+        '<div class="drawer__head sc-head"><span class="p-ava p-ava--md">' + ini + '</span><div style="min-width:0"><h2 id="scName">' + esc(d.n) + '</h2><p class="muted" style="margin:2px 0 0">' + esc(d.city) + ' · ' + esc(d.spec) + ' · ' + (d.kind === 'new' ? 'новый курсант' : 'проходил курсы') + '</p></div>' +
+        '<button class="iconbtn" type="button" data-card-close aria-label="Закрыть карточку">×</button></div>' +
+        '<div class="drawer__body sc-body">' +
+        '<section><h3>Личные данные</h3><dl class="kv">' +
+        '<div><dt>Дата рождения</dt><dd>12.04.1985 (пример)</dd></div>' +
+        '<div><dt>СНИЛС</dt><dd><span data-pd>•••-•••-••• 01</span> <button class="linkbtn" type="button" data-pd-show>показать</button></dd></div>' +
+        '<div><dt>Телефон, e-mail</dt><dd>+7 (900) 000-00-00 · пример@example.ru</dd></div>' +
+        '<div><dt>Место работы</dt><dd>место работы (пример), ' + esc(d.city) + '</dd></div>' +
+        '<div><dt>Документ об образовании</dt><dd>высшее — специалитет · 2008 · <span class="dk ' + DOCL[d.doc][0] + '">' + DOCL[d.doc][1] + '</span></dd></div>' +
+        '<div><dt>Кабинет на сайте ИХС</dt><dd>есть · вход по коду из письма</dd></div></dl>' +
+        '<p class="hint" style="margin:8px 0 0">Документы — один набор на все курсы. Просмотр личных данных пишется в журнал.</p></section>' +
+        '<section><h3>Курсы <span class="muted">' + d.runs.length + '</span></h3><ul class="sc-runs">' + d.runs.map(function (r) {
+          return '<li><div><b>' + esc(r.c) + '</b> <span class="muted">' + esc(r.d) + '</span><small>заявка № ' + r.order + (r.cert ? ' · удостоверение № ' + r.cert : '') + '</small></div>' +
+            '<div class="sc-runs__st"><span class="cr ' + RS[r.st][0] + '">' + RS[r.st][1] + '</span>' + (r.st === 'done' ? FRL[r.frdo] : '') + (r.page ? '<a class="linkbtn" href="' + r.page + '">к запуску</a>' : '') + '</div></li>';
+        }).join('') + '</ul></section>' +
+        '<section><h3>История</h3><ol class="sc-ev">' + d.ev.map(function (e) {
+          return '<li class="' + EV[e.t][1] + '"><span class="sc-ev__ic" aria-hidden="true">' + EV[e.t][0] + '</span><span><time>' + e.d + '</time>' + esc(e.x) + '</span></li>';
+        }).join('') + '</ol></section></div>' +
+        '<div class="drawer__foot"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: письмо курсанту из панели, копия — в историю">Написать письмо</button><button class="btn btn--primary btn--sm" type="button" data-card-close>Закрыть</button></div>';
+      card.hidden = false; back.hidden = false; opener = from || null;
+      reg.querySelectorAll('tr.is-open').forEach(function (r) { r.classList.remove('is-open'); });
+      var row = reg.querySelector('tr[data-id="' + id + '"]'); if (row) row.classList.add('is-open');
+      card.querySelector('[data-card-close]').focus();
+      try { history.replaceState(null, '', '#' + id); } catch (err) { /* file:// in some browsers */ }
+    };
+    var closeCard = function () {
+      card.hidden = true; back.hidden = true; reg.querySelectorAll('tr.is-open').forEach(function (r) { r.classList.remove('is-open'); });
+      try { history.replaceState(null, '', location.pathname); } catch (err) { /* ignore */ }
+      if (opener) opener.focus();
+    };
+    reg.addEventListener('click', function (e) { var tr = e.target.closest('tr[data-id]'); if (tr && !e.target.closest('a')) openCard(tr.getAttribute('data-id'), tr.querySelector('[data-card]')); });
+    reg.addEventListener('keydown', function (e) { if (e.key === 'Enter' && e.target.matches('tr[data-id]')) openCard(e.target.getAttribute('data-id'), e.target); });
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-card-close]')) closeCard();
+      var s = e.target.closest('[data-pd-show]'); if (s) { s.previousElementSibling.textContent = '000-000-000 01 (пример)'; s.remove(); window.panelToast('Показано. Просмотр СНИЛС записан в журнал.'); }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !card.hidden) closeCard(); });
+    if (location.hash && DATA[location.hash.slice(1)]) openCard(location.hash.slice(1));
   }
 
   /* run documents: attendance -> attestation */
@@ -128,7 +183,9 @@
     } else if ((t = e.target.closest('[data-frdo-ok]'))) {
       step('done', 'is-done'); bst('badge--ok', '✓ принято ФИС ФРДО'); t.closest('[data-frdo-result]').hidden = true;
       document.querySelectorAll('#certs tr[data-tags~="frdo-ready"] td:last-child').forEach(function (td) { td.innerHTML = '<span class="badge badge--ok">принято</span>'; });
-      window.panelToast('Принято. У курсантов в кабинете — «Передано в ФИС ФРДО».');
+      var all = document.querySelectorAll('[data-rdoc]'), last = all[all.length - 1];
+      if (last) { var lb = last.querySelector('[data-rdoc-st]'); lb.className = 'badge badge--ok'; lb.textContent = '✓ принято ФИС ФРДО'; last.querySelector('[data-rdoc-when]').textContent = 'сейчас'; }
+      window.panelToast('Принято. У курсантов в кабинете — «Передано в ФИС ФРДО». Когда все строки приняты, запуск уходит в «Завершённые».');
     }
   });
 })();

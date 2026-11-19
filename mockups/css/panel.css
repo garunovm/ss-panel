@@ -385,7 +385,7 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .log-det summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--link); min-height: 28px; }
 .log-det .diff { margin-top: 8px; }
 
-/* ---------- students of a run (admin-students.html, js/students.js) ---------- */
+/* ---------- students of a run (admin-run-master.html, js/students.js) ---------- */
 .pipe { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
 .pipe li { position: relative; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
 .pipe b { display: block; font: 400 24px/1.1 var(--font-display); color: var(--text-heading); }
@@ -431,7 +431,7 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .reg-empty { margin: 0; padding: 24px; text-align: center; color: var(--muted); }
 @media (max-width: 999px) { .reg-card { grid-template-columns: minmax(0, 1fr); } }
 
-/* ---------- run documents (admin-run-docs.html) ---------- */
+/* ---------- run documents (admin-run-adv.html) ---------- */
 .rdocs { list-style: none; margin: 0; padding: 0; }
 .rdoc { display: grid; grid-template-columns: 32px minmax(0, 1fr) 210px; gap: 8px 14px; align-items: start; padding: 14px 20px; border-top: 1px solid var(--line); }
 .rdoc:first-child { border-top: 0; }
@@ -448,7 +448,7 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .next-steps { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
 @media (max-width: 899px) { .rdoc { grid-template-columns: 28px minmax(0, 1fr); padding: 12px 16px; } .rdoc__st, .rdoc__act { grid-column: 2; } }
 
-/* ---------- certificates and ФИС ФРДО (admin-frdo.html) ---------- */
+/* ---------- certificates and ФИС ФРДО (admin-run-adv.html) ---------- */
 .fsteps { list-style: none; margin: 0; padding: 14px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; border-bottom: 1px solid var(--line); }
 .fsteps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 2px 10px; align-items: center; padding: 10px 12px; border-radius: var(--radius); border: 1px solid var(--line); font-size: 14px; font-weight: 700; }
 .fsteps li b { grid-row: span 2; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--navy-50); color: var(--navy-600); }
@@ -459,3 +459,39 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .fbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--line); }
 .fields-list { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
 @media (max-width: 899px) { .fsteps { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 12px 16px; } }
+
+/* ---------- student card in the side panel (admin-students-all.html) ---------- */
+.seg { display: inline-flex; border: 1.5px solid var(--navy-800); border-radius: 8px; overflow: hidden; }
+.seg button { min-height: 36px; padding: 0 14px; border: 0; background: #fff; color: var(--navy-800); font: 700 13px/1 var(--font); cursor: pointer; }
+.seg button + button { border-left: 1.5px solid var(--navy-800); }
+.seg button[aria-pressed="true"] { background: var(--navy-800); color: #fff; }
+.reg-row { cursor: pointer; }
+.reg-row.is-open { background: var(--accent-bg); }
+.reg-row.is-open td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
+.cr--cancel { background: #fff; color: var(--muted); text-decoration: line-through; }
+.drawer--card { width: min(600px, 100vw); }
+.sc-head { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.sc-head h2 { font-size: 20px; }
+.sc-body { display: grid; gap: 22px; align-content: start; }
+.sc-body h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+.sc-runs { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.sc-runs li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); font-size: 14px; }
+.sc-runs small { display: block; color: var(--muted); font-size: 12px; }
+.sc-runs__st { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: flex-end; }
+.sc-ev { list-style: none; margin: 0; padding: 0 0 0 4px; display: grid; gap: 0; }
+.sc-ev li { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; padding: 0 0 14px; font-size: 14px; }
+.sc-ev li::before { content: ""; position: absolute; left: 13px; top: 28px; bottom: 0; width: 2px; background: var(--line); }
+.sc-ev li:last-child::before { display: none; }
+.sc-ev time { display: block; font-size: 12px; color: var(--muted); }
+.sc-ev__ic { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--navy-50); color: var(--navy-600); font-size: 13px; font-weight: 700; }
+.ev--ok .sc-ev__ic, .ev--frdo .sc-ev__ic { background: var(--green-bg); color: var(--green); }
+.ev--course .sc-ev__ic, .ev--cert .sc-ev__ic { background: var(--amber-100); color: var(--amber-700); }
+.ev--pay .sc-ev__ic, .ev--doc .sc-ev__ic { background: var(--blue-50); color: var(--blue-700); }
+.ev--cancel .sc-ev__ic { background: var(--red-bg); color: var(--red); }
+@media (max-width: 599px) { .sc-runs li { grid-template-columns: minmax(0, 1fr); } .sc-runs__st { justify-content: flex-start; } }
+
+/* ---------- runs list (admin-runs.html) and run pages ---------- */
+.rstage { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; background: var(--navy-50); color: var(--navy-600); }
+.rstage.is-now { background: var(--accent-bg); color: var(--accent-text); box-shadow: inset 0 0 0 1px var(--accent); }
+.rstage.is-done { background: var(--green-bg); color: var(--green); }
+.stu-link { font-weight: 700; color: var(--text-heading); }
