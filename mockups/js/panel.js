@@ -41,8 +41,8 @@
         { id: 'program', t: 'Программы', i: 'program', href: 'admin-program.html' }
       ] },
       { title: 'Справочники', items: [
-        { id: 'clinics', t: 'Клиники', i: 'clinic', href: '#' },
-        { id: 'dicts', t: 'Направления, места', i: 'dict', href: '#' }
+        { id: 'clinics', t: 'Клиники и места', i: 'clinic', href: 'admin-clinics.html' },
+        { id: 'dicts', t: 'Списки значений', i: 'dict', href: 'admin-dicts.html' }
       ] },
       { title: 'Система', items: [
         { id: 'users', t: 'Пользователи и роли', i: 'users', href: '#' },
@@ -135,9 +135,11 @@
     var tag = '';
     var apply = function () {
       var q = search ? search.value.trim().toLowerCase() : '', n = 0;
-      tbl.querySelectorAll('tbody tr').forEach(function (tr) {
+      tbl.querySelectorAll('tbody tr:not(.row-edit)').forEach(function (tr) {
         var ok = (!tag || (' ' + tr.getAttribute('data-tags') + ' ').indexOf(' ' + tag + ' ') > -1) && (!q || tr.textContent.toLowerCase().indexOf(q) > -1);
         tr.hidden = !ok; if (ok) n++;
+        var ed = tr.nextElementSibling; // inline edit row (dicts.js): hide with its row, keep closed state
+        if (ed && ed.classList.contains('row-edit') && !ok) ed.hidden = true;
       });
       if (count) count.textContent = 'Показано: ' + n;
     };
