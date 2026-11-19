@@ -8,6 +8,7 @@
   - #att [data-day]     run documents (admin-run-docs.html): attendance -> attestation («не допущен» if a day is missed)
   - [data-rdoc]         documents in the legal order: «Сформировать» -> «Отправить на подпись» -> «Подписать ЭЦП»;
                         signing a document opens the next step
+  - [data-frdo-build]   ФИС ФРДО batch (admin-frdo.html): build file for ready rows -> «отправлено» -> «принято»
   Row open/close is dicts.js ([data-row-toggle]).
 */
 (function () {
@@ -108,6 +109,26 @@
       setDoc(li, 'signed', 'подписан сейчас');
       var next = li.nextElementSibling; if (next && /ждёт/.test(next.querySelector('[data-rdoc-st]').textContent)) setDoc(next, 'draft', 'предыдущий шаг подписан');
       window.panelToast('Подписано ЭЦП. Следующий шаг открыт.');
+    }
+  });
+
+  /* ФИС ФРДО batch: build -> sent -> accepted */
+  var step = function (k, cls) { var li = document.querySelector('[data-fstep="' + k + '"]'); if (li) li.className = cls; };
+  var bst = function (cls, txt) { var b = document.querySelector('[data-batch-st]'); if (b) { b.className = 'badge ' + cls; b.textContent = txt; } };
+  document.addEventListener('click', function (e) {
+    var t;
+    if ((t = e.target.closest('[data-frdo-build]'))) {
+      step('build', 'is-done'); step('sent', 'is-now'); bst('badge--blue', 'файл собран');
+      t.disabled = true; var s2 = document.querySelector('[data-frdo-sent]'); s2.disabled = false; s2.className = 'btn btn--primary'; s2.focus();
+      window.panelToast('Файл собран по шаблону ФИС ФРДО — скачайте и загрузите в ФИС ФРДО.');
+    } else if ((t = e.target.closest('[data-frdo-sent]'))) {
+      step('sent', 'is-done'); step('done', 'is-now'); bst('badge--warn', 'отправлено, ждём ответ');
+      t.disabled = true; t.className = 'btn btn--outline'; document.querySelector('[data-frdo-result]').hidden = false; document.querySelector('[data-frdo-ok]').focus();
+      window.panelToast('Отмечено: отправлено. Дата и сотрудник записаны в журнал.');
+    } else if ((t = e.target.closest('[data-frdo-ok]'))) {
+      step('done', 'is-done'); bst('badge--ok', '✓ принято ФИС ФРДО'); t.closest('[data-frdo-result]').hidden = true;
+      document.querySelectorAll('#certs tr[data-tags~="frdo-ready"] td:last-child').forEach(function (td) { td.innerHTML = '<span class="badge badge--ok">принято</span>'; });
+      window.panelToast('Принято. У курсантов в кабинете — «Передано в ФИС ФРДО».');
     }
   });
 })();

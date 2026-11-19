@@ -38,7 +38,7 @@
       { title: 'Курсанты', items: [
         { id: 'students', t: 'Курсанты', i: 'students', href: 'admin-students-all.html', badge: '3' },
         { id: 'rundocs', t: 'Документы запуска', i: 'docs', href: 'admin-run-docs.html' },
-        { id: 'frdo', t: 'Удостоверения и ФИС ФРДО', i: 'cert', href: '#' }
+        { id: 'frdo', t: 'Удостоверения и ФИС ФРДО', i: 'cert', href: 'admin-frdo.html' }
       ] },
       { title: 'Специалисты', items: [
         { id: 'specialists', t: 'Специалисты', i: 'people', href: 'admin-specialists.html' },
