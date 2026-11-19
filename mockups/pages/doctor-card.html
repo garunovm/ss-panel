@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Моя карточка — Кабинет врача ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="doctor" data-page="card">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- doctor.* → Моя карточка (specialists.plans.md, access.plans.md): the doctor sees ONLY his card and edits ONLY the fields
+     the admin allowed in «Схема карточки» (врач правит). Fields marked «через подтверждение» go to the manager's queue; the
+     sites keep the old value until accepted. Other fields are read-only here; internal fields (staff note) are not shown at all.
+     The assistant works for the doctor but cannot edit the card. Consistent with admin.*: «Регалии» accepted 19.11 09:05
+     (log), photo still waiting (queue). -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs">Кабинет врача</p>
+      <h1>Моя карточка</h1>
+      <p class="muted" style="margin:4px 0 0">Так вас видят на сайтах ИХС, FootDoctor и RUSFAS. Править можно отмеченные поля; часть правок сначала проверяет менеджер.</p>
+    </div>
+  </div>
+
+  <div class="note-assist" data-only="assistant" hidden role="note"><b>Вы вошли как ассистент.</b> Карточку врача правит только сам врач — здесь всё только для просмотра. Ваши разделы — «Слоты» и «Записи».</div>
+
+  <div class="grid grid--side">
+    <form class="card" data-card-form novalidate aria-labelledby="hMe">
+      <div class="person" style="grid-template-columns:96px minmax(0,1fr)">
+        <span class="p-ava p-ava--lg"><img src="../img/cherevcov.jpg" alt="Текущее фото"></span>
+        <div>
+          <h2 id="hMe" style="font:400 26px/1.15 var(--font-display)">Черевцов Виталий Николаевич</h2>
+          <div class="person__meta" style="margin-top:6px"><span class="badge badge--blue">ведёт приём</span><span class="badge badge--warn">ментор курсов</span></div>
+          <p class="muted" style="margin:8px 0 0">Новое фото <span class="badge badge--warn" data-state>на подтверждении с 19.11, 08:52</span> <button class="linkbtn" type="button" data-edit data-toast="Макет: выбор файла; новое фото уйдёт менеджеру на подтверждение">заменить</button></p>
+        </div>
+      </div>
+      <div class="card__body" style="border-top:1px solid var(--line)">
+        <div class="fgrid">
+          <div class="field"><label for="c-fio">ФИО <span class="flag flag--ok">через подтверждение</span></label><input class="input" id="c-fio" value="Черевцов Виталий Николаевич" data-needs-ok></div>
+          <div class="field"><label for="c-city">Город <span class="flag flag--int">меняет менеджер</span></label><input class="input" id="c-city" value="Москва" readonly data-locked></div>
+          <div class="field"><label for="c-spec">Специальность</label><select class="select" id="c-spec"><option selected>Травматолог-ортопед</option><option>Хирург</option><option>Подолог</option></select><span class="hint">сохраняется сразу</span></div>
+          <div class="field"><label for="c-since">Стаж с года</label><input class="input" id="c-since" value="2004" inputmode="numeric"><span class="hint">на сайте: «22+ лет стаж работы»</span></div>
+          <div class="field full"><label for="c-reg">Регалии и должность <span class="flag flag--ok">через подтверждение</span> <span class="badge badge--ok" data-state>✓ принято 19.11, 09:05</span></label><textarea class="textarea" id="c-reg" data-needs-ok>Травматолог-ортопед, врач высшей категории. Ментор курсов Института хирургии стопы.</textarea></div>
+          <div class="field full"><label for="c-dirs">Направления</label><textarea class="textarea" id="c-dirs" style="min-height:70px">Хирургия переднего отдела стопы
+Неврома Мортона
+Хирургическая анатомия стопы (преподавание)</textarea><span class="hint">по строке на направление · сохраняется сразу</span></div>
+          <div class="field full"><label for="c-edu">Образование</label><textarea class="textarea" id="c-edu" style="min-height:60px">2002 — медицинский университет (пример)
+2002–2004 — ординатура по травматологии и ортопедии (пример)</textarea></div>
+          <div class="field full"><label for="c-soc">Профессиональные сообщества</label><input class="input" id="c-soc" value="Член RUSFAS"></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center"><button class="btn btn--accent" type="submit" data-edit>Сохранить</button><span class="muted">Поля «через подтверждение» уйдут менеджеру; на сайтах до проверки — прежнее значение.</span></div>
+      </div>
+    </form>
+
+    <aside class="grid" aria-label="Публикация и курсы">
+      <section class="card"><div class="card__head"><h2>Где вас видно</h2></div><div class="card__body">
+        <div class="pubrow"><span class="site site--ss is-on">ИХС</span><span>сайт ИХС<small>страница специалиста, запись на приём</small></span><span class="badge badge--ok">✓</span></div>
+        <div class="pubrow"><span class="site site--fd is-on">FD</span><span>FootDoctor<small>ментор курсов</small></span><span class="badge badge--ok">✓</span></div>
+        <div class="pubrow"><span class="site site--rf is-on">RF</span><span>RUSFAS<small>спикер</small></span><span class="badge badge--ok">✓</span></div>
+        <p class="hint" style="margin:10px 0 0">Где публиковать, решает менеджер. Изменения доходят до сайтов за несколько минут.</p>
+      </div></section>
+      <section class="card"><div class="card__head"><h2>Мои курсы</h2></div><div class="card__body">
+        <ul class="next-steps" style="list-style:none;padding:0">
+          <li><b>Продвинутый курс</b> · 23–24.10.2026<br><span class="muted">4 темы: анатомия стопы, осмотр, плантарная пластинка, неврома Мортона</span></li>
+          <li><b>Мастер-курс</b> · 27–28.11.2026<br><span class="muted">2 темы · в эти дни приём закрыт</span></li>
+        </ul>
+        <p class="hint" style="margin:10px 0 0">Собирается из программ сам; программы правит учебная часть.</p>
+      </div></section>
+    </aside>
+  </div>
+</main>
+</div>
+
+<div class="demo-dock" role="group" aria-label="Демо: кто вошёл">
+  <span>Демо — вошёл:</span>
+  <button class="chip" type="button" data-as="doctor" aria-pressed="true">врач</button>
+  <button class="chip" type="button" data-as="assistant" aria-pressed="false">ассистент</button>
+</div>
+<script src="../js/panel.js"></script>
+<script src="../js/doctor.js"></script>
+</body>
+</html>

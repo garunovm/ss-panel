@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Записи — Кабинет врача ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="doctor" data-page="visits">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- doctor.* → Записи (clinics.plans.md): bookings to this doctor. The call centre is not changed — every request from the site
+     also goes to its e-mail; here the doctor/assistant sees the same request, confirms, marks «came / no-show», cancels with a
+     reason. Statuses as in the site cabinet: ждёт звонка → подтверждена → состоялась / не пришёл / отменена.
+     Only contacts and time — no medical data (facts 2026-11-03). Patient names are fictitious; times agree with doctor-slots
+     (Mon/Wed Москва, Fri Жуковский; 27–28.11 closed — the 27.11 booking needs moving). -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs">Кабинет врача</p>
+      <h1>Записи на приём</h1>
+      <p class="muted" style="margin:4px 0 0">Заявки с сайта ИХС к Черевцову В. Н. Каждая заявка уходит и колл-центру на почту; здесь — те же заявки и их статус.</p>
+    </div>
+  </div>
+
+  <section class="card" aria-labelledby="hV">
+    <h2 class="vh" id="hV">Записи</h2>
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Какие" data-filter="#visits">
+        <button class="chip" type="button" data-tag="soon" aria-pressed="true">Предстоящие</button>
+        <button class="chip" type="button" data-tag="call" aria-pressed="false">Ждут звонка</button>
+        <button class="chip" type="button" data-tag="move" aria-pressed="false">Перенести</button>
+        <button class="chip" type="button" data-tag="past" aria-pressed="false">Прошедшие</button>
+        <button class="chip" type="button" data-tag="" aria-pressed="false">Все</button>
+      </div>
+      <span class="toolbar__count" data-count="#visits" aria-live="polite"></span>
+    </div>
+    <div class="table-wrap">
+      <table class="table" id="visits">
+        <thead><tr><th scope="col">Когда</th><th scope="col">Пациент</th><th scope="col">Где</th><th scope="col">Статус</th><th scope="col"><span class="vh">Действия</span></th></tr></thead>
+        <tbody>
+          <tr data-visit data-tags="soon call"><td class="log-time">пн 23.11<br>10:30</td><td><b>Ковалёва Т. С.</b><small class="muted" style="display:block">+7 (900) 000-00-11 · запись с сайта без входа, 19.11</small></td><td>Москва</td><td><span class="badge badge--blue" data-vst>● ждёт звонка</span><small class="muted" style="display:block">заявка у колл-центра</small></td><td><div class="visit__act"><button class="btn btn--accent btn--sm" type="button" data-v="confirm">Подтвердить</button><button class="btn btn--outline btn--sm" type="button" data-v="cancel">Отменить</button></div>
+            <div class="visit__reason" hidden><select class="select" aria-label="Причина отмены"><option>пациент отказался</option><option>врач не сможет</option><option>дубль заявки</option></select><button class="btn btn--primary btn--sm" type="button" data-v="cancel-go">Отменить запись</button></div></td></tr>
+          <tr data-visit data-tags="soon"><td class="log-time">ср 25.11<br>11:00</td><td><b>Петренко А. В.</b><small class="muted" style="display:block">+7 (900) 000-00-12 · из кабинета на сайте</small></td><td>Москва</td><td><span class="badge badge--ok" data-vst>✓ подтверждена</span></td><td><div class="visit__act"><button class="btn btn--outline btn--sm" type="button" data-v="cancel">Отменить</button></div>
+            <div class="visit__reason" hidden><select class="select" aria-label="Причина отмены"><option>пациент отказался</option><option>врач не сможет</option></select><button class="btn btn--primary btn--sm" type="button" data-v="cancel-go">Отменить запись</button></div></td></tr>
+          <tr data-visit data-tags="soon move" class="is-bad"><td class="log-time">пт 27.11<br>11:30</td><td><b>Сафонов И. Г.</b><small class="muted" style="display:block">+7 (900) 000-00-13 · запись с сайта, 10.11</small></td><td>г. Жуковский</td><td><span class="badge badge--bad" data-vst>перенести</span><small class="muted" style="display:block">27–28.11 — мастер-курс, приём закрыт</small></td><td><div class="visit__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Колл-центру ушло: «перенести запись Сафонова И. Г.» — с предложением свободных слотов">Передать колл-центру</button><button class="btn btn--outline btn--sm" type="button" data-v="cancel">Отменить</button></div>
+            <div class="visit__reason" hidden><select class="select" aria-label="Причина отмены"><option>врач не сможет</option><option>пациент отказался</option></select><button class="btn btn--primary btn--sm" type="button" data-v="cancel-go">Отменить запись</button></div></td></tr>
+          <tr data-visit data-tags="soon call"><td class="log-time">ср 02.12<br>12:00</td><td><b>Гаврилова Е. П.</b><small class="muted" style="display:block">+7 (900) 000-00-14 · запись с сайта без входа, сегодня</small></td><td>Москва</td><td><span class="badge badge--blue" data-vst>● ждёт звонка</span><small class="muted" style="display:block">заявка у колл-центра</small></td><td><div class="visit__act"><button class="btn btn--accent btn--sm" type="button" data-v="confirm">Подтвердить</button><button class="btn btn--outline btn--sm" type="button" data-v="cancel">Отменить</button></div>
+            <div class="visit__reason" hidden><select class="select" aria-label="Причина отмены"><option>пациент отказался</option><option>врач не сможет</option><option>дубль заявки</option></select><button class="btn btn--primary btn--sm" type="button" data-v="cancel-go">Отменить запись</button></div></td></tr>
+          <tr data-visit data-tags="past"><td class="log-time">ср 18.11<br>10:00</td><td><b>Лаптев Р. О.</b><small class="muted" style="display:block">+7 (900) 000-00-15</small></td><td>Москва</td><td><span class="badge badge--blue" data-vst>подтверждена</span><small class="muted" style="display:block">отметьте, был ли приём</small></td><td><div class="visit__act"><button class="btn btn--ok btn--sm" type="button" data-v="came">Пришёл</button><button class="btn btn--outline btn--sm" type="button" data-v="noshow">Не пришёл</button></div></td></tr>
+          <tr data-visit data-tags="past"><td class="log-time">пн 16.11<br>13:30</td><td><b>Миронова В. А.</b><small class="muted" style="display:block">+7 (900) 000-00-16</small></td><td>Москва</td><td><span class="badge badge--bad" data-vst>не пришёл</span></td><td></td></tr>
+          <tr data-visit data-tags="past"><td class="log-time">пт 13.11<br>11:00</td><td><b>Ефимов К. Д.</b><small class="muted" style="display:block">+7 (900) 000-00-17</small></td><td>г. Жуковский</td><td><span class="badge badge--ok" data-vst>состоялась</span></td><td></td></tr>
+          <tr data-visit data-tags="past"><td class="log-time">ср 11.11<br>12:30</td><td><b>Зуева Н. Л.</b><small class="muted" style="display:block">+7 (900) 000-00-18</small></td><td>Москва</td><td><span class="badge" data-vst>✕ отменена: пациент отказался</span></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend"><span>Только контакты и время — без жалоб и диагнозов.</span><span>Контакты пациентов видят врач, его ассистенты и админ; просмотр пишется в журнал.</span><span>Кто ставит «подтверждена», пока колл-центр работает вне панели, — решить (сейчас: врач или ассистент).</span></div>
+  </section>
+</main>
+</div>
+
+<div class="demo-dock" role="group" aria-label="Демо: кто вошёл">
+  <span>Демо — вошёл:</span>
+  <button class="chip" type="button" data-as="doctor" aria-pressed="true">врач</button>
+  <button class="chip" type="button" data-as="assistant" aria-pressed="false">ассистент</button>
+</div>
+<script src="../js/panel.js"></script>
+<script src="../js/doctor.js"></script>
+</body>
+</html>

@@ -59,9 +59,9 @@
     ],
     doctor: [
       { title: 'Кабинет врача', items: [
-        { id: 'card', t: 'Моя карточка', i: 'card', href: '#' },
-        { id: 'slots', t: 'Слоты', i: 'slots', href: '#' },
-        { id: 'visits', t: 'Записи', i: 'visits', href: '#' }
+        { id: 'card', t: 'Моя карточка', i: 'card', href: 'doctor-card.html' },
+        { id: 'slots', t: 'Слоты', i: 'slots', href: 'doctor-slots.html' },
+        { id: 'visits', t: 'Записи', i: 'visits', href: 'doctor-visits.html', badge: '3' }
       ] }
     ]
   };

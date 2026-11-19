@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Слоты — Кабинет врача ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="doctor" data-page="slots">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- doctor.* → Слоты (clinics.plans.md): the assistant (or the doctor) sets slots directly, no confirmation. A weekly
+     template per clinic (days, from–to, slot length) + exceptions (vacation, courses where he is a mentor) → free time that
+     the ИХС site takes in real time (api.plans.md). A new place is proposed to the manager (queue); until then — no slots there.
+     Consistent with admin.*: Москва Mon, Wed 10–14; Жуковский Fri 11–15; vacation 28.12–10.01; master course 27–28.11. -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs">Кабинет врача</p>
+      <h1>Слоты приёма</h1>
+      <p class="muted" style="margin:4px 0 0">Шаблон недели по каждой клинике и исключения. Сайт ИХС показывает свободное время отсюда сразу, без подтверждения.</p>
+    </div>
+    <div class="p-pagehead__actions">
+      <label class="rf-sel" data-only="assistant" hidden><span>Работаю за врача</span><select class="select"><option>Черевцов В. Н.</option></select></label>
+    </div>
+  </div>
+
+  <div class="grid grid--side">
+    <div class="grid">
+      <section class="card" aria-labelledby="hTpl">
+        <div class="card__head"><div><h2 id="hTpl">Шаблон недели</h2><p class="muted">Нажмите на день, чтобы включить или выключить. Предпросмотр ниже меняется сразу.</p></div>
+          <button class="btn btn--outline btn--sm" type="button" data-toast="Макет: выбор места из справочника «Клиники и места»; нового места нет — «Предложить место» (через менеджера)">+ Клиника</button></div>
+        <div class="rule" data-rule data-clinic="Ортопедический салон «Сурсил-орто», Москва" data-short="Москва" data-color="#0068B0">
+          <div class="rule__t"><span class="rule__dot" style="background:#0068B0" aria-hidden="true"></span><b>Ортопедический салон «Сурсил-орто»</b><span class="muted">Москва, Ленинский пр. (пример)</span></div>
+          <div class="rule__days" role="group" aria-label="Дни приёма — Москва"><button type="button" data-day="0" aria-pressed="true">пн</button><button type="button" data-day="1" aria-pressed="false">вт</button><button type="button" data-day="2" aria-pressed="true">ср</button><button type="button" data-day="3" aria-pressed="false">чт</button><button type="button" data-day="4" aria-pressed="false">пт</button><button type="button" data-day="5" aria-pressed="false">сб</button><button type="button" data-day="6" aria-pressed="false">вс</button></div>
+          <div class="rule__time"><label>с <input class="input" type="time" value="10:00" data-from aria-label="Москва: начало"></label><label>до <input class="input" type="time" value="14:00" data-to aria-label="Москва: конец"></label><label>приём <select class="select" data-len aria-label="Москва: длительность приёма"><option value="20">20 мин</option><option value="30" selected>30 мин</option><option value="45">45 мин</option><option value="60">60 мин</option></select></label></div>
+        </div>
+        <div class="rule" data-rule data-clinic="НПО «Сурсил-орто», г. Жуковский" data-short="Жуковский" data-color="#8A5A00">
+          <div class="rule__t"><span class="rule__dot" style="background:#8A5A00" aria-hidden="true"></span><b>НПО «Сурсил-орто»</b><span class="muted">г. Жуковский, ул. Кооперативная, д. 4А</span></div>
+          <div class="rule__days" role="group" aria-label="Дни приёма — Жуковский"><button type="button" data-day="0" aria-pressed="false">пн</button><button type="button" data-day="1" aria-pressed="false">вт</button><button type="button" data-day="2" aria-pressed="false">ср</button><button type="button" data-day="3" aria-pressed="false">чт</button><button type="button" data-day="4" aria-pressed="true">пт</button><button type="button" data-day="5" aria-pressed="false">сб</button><button type="button" data-day="6" aria-pressed="false">вс</button></div>
+          <div class="rule__time"><label>с <input class="input" type="time" value="11:00" data-from aria-label="Жуковский: начало"></label><label>до <input class="input" type="time" value="15:00" data-to aria-label="Жуковский: конец"></label><label>приём <select class="select" data-len aria-label="Жуковский: длительность приёма"><option value="20">20 мин</option><option value="30" selected>30 мин</option><option value="45">45 мин</option><option value="60">60 мин</option></select></label></div>
+        </div>
+        <div class="rule rule--pending"><div class="rule__t"><span class="rule__dot" aria-hidden="true"></span><b>Салон «Сурсил-орто» на Ленинском</b><span class="badge badge--warn">предложено 18.11 · ждёт менеджера</span></div><p class="muted" style="margin:0">Слоты здесь можно будет ставить после подтверждения. Возможно, это то же место, что и первое.</p></div>
+      </section>
+
+      <section class="card" aria-labelledby="hPv">
+        <div class="card__head"><div><h2 id="hPv">Две недели вперёд</h2><p class="muted" data-pv-sum></p></div>
+          <span class="pv-legend"><span class="pv-slot" style="--c:#0068B0">10:00</span> свободно <span class="pv-slot is-booked" style="--c:#0068B0">10:30</span> занято</span></div>
+        <div class="pv" id="preview" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <aside class="grid" aria-label="Исключения">
+      <section class="card"><div class="card__head"><h2>Исключения</h2></div><div class="card__body">
+        <ul class="exc" data-exc-list>
+          <li data-exc data-from="2026-11-27" data-to="2026-11-28"><span><b>27.11 — 28.11</b> <span class="muted">мастер-курс, ментор</span></span><button class="linkbtn" type="button" data-exc-del>убрать</button></li>
+          <li data-exc data-from="2026-12-28" data-to="2027-01-10"><span><b>28.12 — 10.01</b> <span class="muted">отпуск</span></span><button class="linkbtn" type="button" data-exc-del>убрать</button></li>
+        </ul>
+        <div class="fgrid" style="margin-top:12px">
+          <div class="field"><label for="exFrom">С</label><input class="input" id="exFrom" type="date"></div>
+          <div class="field"><label for="exTo">По</label><input class="input" id="exTo" type="date"></div>
+          <div class="field full"><label for="exWhy">Причина</label><input class="input" id="exWhy" placeholder="отпуск, конгресс, курс"></div>
+        </div>
+        <button class="btn btn--outline btn--sm" type="button" data-exc-add>+ Исключение</button>
+        <p class="hint" style="margin:10px 0 0">Если на эти дни уже есть записи, они появятся в «Записях» с пометкой «перенести» — колл-центр свяжется с пациентом.</p>
+      </div></section>
+      <section class="card"><div class="card__head"><h2>Как это работает</h2></div><div class="card__body">
+        <ul class="next-steps" style="list-style:disc">
+          <li>Сайт ИХС берёт свободное время отсюда в момент записи; слот занимается сразу, двойной записи не будет.</li>
+          <li>Заявка с сайта уходит и на почту колл-центра — как сейчас.</li>
+          <li>Курсы, где врач — ментор, можно добавлять в исключения сами (позже — автоматически из программ).</li>
+        </ul>
+      </div></section>
+    </aside>
+  </div>
+</main>
+</div>
+
+<div class="demo-dock" role="group" aria-label="Демо: кто вошёл">
+  <span>Демо — вошёл:</span>
+  <button class="chip" type="button" data-as="doctor" aria-pressed="true">врач</button>
+  <button class="chip" type="button" data-as="assistant" aria-pressed="false">ассистент</button>
+</div>
+<script src="../js/panel.js"></script>
+<script src="../js/doctor.js"></script>
+</body>
+</html>
