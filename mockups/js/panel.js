@@ -53,7 +53,7 @@
       ] },
       { title: 'Система', items: [
         { id: 'users', t: 'Пользователи и роли', i: 'users', href: 'admin-users.html' },
-        { id: 'api', t: 'Сайты и ключи API', i: 'api', href: '#' },
+        { id: 'api', t: 'Сайты и ключи API', i: 'api', href: 'admin-api.html' },
         { id: 'log', t: 'Журнал', i: 'log', href: 'admin-log.html' }
       ] }
     ],
