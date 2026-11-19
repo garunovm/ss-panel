@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>На подтверждение — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="queue">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → На подтверждение (specialists.plans.md): edits from doctor.* to fields marked «через подтверждение»
+     and new clinics proposed by doctors/assistants. Manager: accept (goes to the sites at the next exchange)
+     or return with a reason (the doctor sees it in his cabinet). Until accepted, the sites keep the old value. -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs">Работа</p>
+      <h1>На подтверждение</h1>
+      <p class="muted" style="margin:4px 0 0">Правки врачей и ассистентов. Пока правка не принята, на сайтах остаётся прежнее значение.</p>
+    </div>
+    <span class="badge badge--warn" data-q-count aria-live="polite"></span>
+  </div>
+
+  <section class="card" aria-label="Очередь">
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Тип">
+        <button class="chip" type="button" aria-pressed="true">Все</button>
+        <button class="chip" type="button" aria-pressed="false">Карточки</button>
+        <button class="chip" type="button" aria-pressed="false">Клиники</button>
+      </div>
+    </div>
+
+    <article class="qitem" data-sites="ИХС, FD, RF">
+      <div class="qitem__top"><span class="p-ava p-ava--md"><img src="../img/cherevcov.jpg" alt=""></span><span><b><a href="admin-specialist.html">Черевцов В. Н.</a></b> · фото<br><span class="muted">предложил сам врач · 19.11.2026, 08:52 · уйдёт на ИХС, FD, RF</span></span><span data-q-status class="badge badge--warn">ждёт</span></div>
+      <div class="diff" role="table" aria-label="Было и стало">
+        <div class="diff__h" role="columnheader">Поле</div><div class="diff__h" role="columnheader">Сейчас на сайтах</div><div class="diff__h" role="columnheader">Предлагается</div>
+        <div class="diff__k" role="cell">Фото</div><div class="diff__old" role="cell"><img src="../img/cherevcov.jpg" alt="Текущее фото"></div><div class="diff__new" role="cell"><span class="p-ava" style="border-radius:8px;width:72px;height:72px;font-size:12px;font-weight:400;text-align:center">новое фото</span><span class="hint">ч/б, 1200×1600 (пример)</span></div>
+      </div>
+      <div class="qitem__actions"><button class="btn btn--ok btn--sm" type="button" data-q-accept>✓ Принять</button><button class="btn btn--outline btn--sm" type="button" data-q-return>Вернуть с причиной</button></div>
+      <div class="qitem__reason" hidden><label class="label" for="r1">Причина — её увидит врач</label><textarea class="textarea" id="r1" placeholder="например: нужно фото на светлом фоне, как у остальных"></textarea><div><button class="btn btn--primary btn--sm" type="button" data-q-send>Вернуть</button></div></div>
+    </article>
+
+    <article class="qitem" data-sites="ИХС, FD, RF">
+      <div class="qitem__top"><span class="p-ava p-ava--md"><img src="../img/cherevcov.jpg" alt=""></span><span><b><a href="admin-specialist.html">Черевцов В. Н.</a></b> · регалии<br><span class="muted">предложил сам врач · 19.11.2026, 08:52</span></span><span data-q-status class="badge badge--warn">ждёт</span></div>
+      <div class="diff" role="table" aria-label="Было и стало">
+        <div class="diff__h" role="columnheader">Поле</div><div class="diff__h" role="columnheader">Сейчас на сайтах</div><div class="diff__h" role="columnheader">Предлагается</div>
+        <div class="diff__k" role="cell">Регалии и должность</div><div class="diff__old" role="cell">Травматолог-ортопед. Ментор курсов Института хирургии стопы.</div><div class="diff__new" role="cell">Травматолог-ортопед, <ins>врач высшей категории</ins>. Ментор курсов Института хирургии стопы.</div>
+      </div>
+      <div class="qitem__actions"><button class="btn btn--ok btn--sm" type="button" data-q-accept>✓ Принять</button><button class="btn btn--outline btn--sm" type="button" data-q-return>Вернуть с причиной</button></div>
+      <div class="qitem__reason" hidden><label class="label" for="r2">Причина — её увидит врач</label><textarea class="textarea" id="r2"></textarea><div><button class="btn btn--primary btn--sm" type="button" data-q-send>Вернуть</button></div></div>
+    </article>
+
+    <article class="qitem" data-sites="ИХС">
+      <div class="qitem__top"><span class="p-ava p-ava--md">ОК</span><span><b>Новая клиника</b> · от ассистента Ольги К. (врачи: Черевцов В. Н.)<br><span class="muted">18.11.2026, 17:40 · в общий справочник экосистемы</span></span><span data-q-status class="badge badge--warn">ждёт</span></div>
+      <div class="diff" role="table" aria-label="Новая клиника">
+        <div class="diff__h" role="columnheader">Поле</div><div class="diff__h" role="columnheader">Похожие в справочнике</div><div class="diff__h" role="columnheader">Предлагается</div>
+        <div class="diff__k" role="cell">Название</div><div class="diff__old" role="cell">Ортопедический салон «Сурсил-орто», Москва, Ленинский пр. (пример) — <b>возможно, дубль</b></div><div class="diff__new" role="cell"><ins>Салон «Сурсил-орто» на Ленинском</ins></div>
+        <div class="diff__k" role="cell">Адрес</div><div class="diff__old" role="cell">Москва, Ленинский пр., д. 0 (пример)</div><div class="diff__new" role="cell"><ins>Москва, Ленинский пр., д. 0, 1 этаж (пример)</ins></div>
+      </div>
+      <div class="qitem__actions"><button class="btn btn--ok btn--sm" type="button" data-q-accept>✓ Добавить в справочник</button><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: слоты ассистента привяжутся к существующей клинике">Это дубль — привязать к существующей</button><button class="btn btn--outline btn--sm" type="button" data-q-return>Вернуть с причиной</button></div>
+      <div class="qitem__reason" hidden><label class="label" for="r3">Причина — её увидит ассистент</label><textarea class="textarea" id="r3"></textarea><div><button class="btn btn--primary btn--sm" type="button" data-q-send>Вернуть</button></div></div>
+    </article>
+  </section>
+</main>
+</div>
+<script src="../js/panel.js"></script>
+</body>
+</html>

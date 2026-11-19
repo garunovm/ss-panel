@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Программа 23–24.10.2026 — Продвинутый курс — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="program">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → Программа запуска, interactive (user's sketch 2026-11-19; wanted also in the RF panel for congress
+     programmes). Start date + default slot → all dates and times are calculated; items keep only order and
+     duration (own duration optional). Drag-and-drop reorders items (↑/↓ for keyboard and touch) and drops
+     mentors onto items; editing opens in place. Speakers are stored by the card's common ID (facts 2026-11-02).
+     WebSocket (admin.* only): a day being edited by a colleague is locked. Logic: js/program.js. -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs"><a href="admin-courses.html">Курсы и запуски</a> / <a href="admin-course.html">Продвинутый курс</a> / Программа</p>
+      <h1>Программа запуска</h1>
+      <p class="muted" style="margin:4px 0 0">Продвинутый курс · Тренинг-центр ГКБ № 67, Москва · руководитель — Качесов А. В. · <span data-count-items></span> пунктов</p>
+    </div>
+    <div class="p-pagehead__actions">
+      <button class="btn btn--outline btn--sm" type="button" data-presence-demo aria-pressed="false">Демо: коллега правит день 2</button>
+      <button class="btn btn--outline" type="button" data-toast="Макет: PDF программы в фирменном виде — для рассылки и печати">PDF программы</button>
+      <button class="btn btn--primary" type="button" data-toast="Программа опубликована: страница курса на ИХС, FD, RF обновится при следующем обмене">Опубликовать</button>
+    </div>
+  </div>
+
+  <section class="card prog-settings" aria-label="Настройки программы">
+    <div class="field"><label for="s-date">Дата начала</label><input class="input" id="s-date" type="date" value="2026-10-23" data-startdate></div>
+    <div class="field"><label for="s-slot">Регламент пункта</label><span class="pi__durbox"><input class="input" id="s-slot" type="number" min="5" max="120" step="5" value="15" data-slot> мин</span></div>
+    <p class="muted">Время всех пунктов считается само: начало дня + длительности по порядку. Пункты перетаскиваются мышью (или кнопками ↑ ↓), менторы — из списка справа прямо на пункт.</p>
+  </section>
+
+  <div class="presence" data-presence hidden role="status">
+    <span class="presence__dot" aria-hidden="true"></span><span class="p-ava" aria-hidden="true">ПА</span>
+    <span><b>Петрова А.</b> (учебная часть) правит день 2. Он закрыт для вас до её сохранения; день 1 свободен.</span>
+  </div>
+  <p class="vh" aria-live="polite" data-live></p>
+
+  <div class="grid grid--side">
+    <div class="grid" data-program style="min-width:0"></div>
+
+    <aside class="grid prog-aside" aria-label="Менторы и публикация">
+      <section class="card"><div class="card__head"><div><h2>Менторы</h2><p class="muted">Перетащите на пункт. Нажатие — только его пункты.</p></div><button class="linkbtn" type="button" data-sp-reset hidden>все пункты</button></div>
+        <div class="card__body" style="padding-top:10px"><ul class="prog-splist" data-speakers></ul>
+        <p class="hint" style="margin:10px 0 0">Список — из «Специалистов». Нет нужного — <a href="admin-specialists.html">заведите карточку</a>.</p></div></section>
+      <section class="card"><div class="card__head"><h2>Публикация</h2></div><div class="card__body">
+        <dl class="kv">
+          <div><dt>Статус</dt><dd><span class="badge badge--ok">опубликована</span></dd></div>
+          <div><dt>На сайтах</dt><dd><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></dd></div>
+          <div><dt>Изменена</dt><dd>21.10.2026, Петрова А.</dd></div>
+        </dl>
+      </div></section>
+    </aside>
+  </div>
+</main>
+</div>
+<script src="../js/panel.js"></script>
+<script src="../js/program.js"></script>
+</body>
+</html>

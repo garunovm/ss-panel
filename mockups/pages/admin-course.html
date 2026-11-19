@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Продвинутый курс — Курсы — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="courses">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → Курс. The course holds what is permanent (title, direction, description, hours for the certificate,
+     1С service, default leader); runs hold dates, place, status, seats, price, programme. The next run is a copy
+     of the previous one (site.plans.md). Description from the real programme of 23–24 Oct 2026. -->
+<main class="p-content" id="main" data-tabs-root>
+  <p class="p-crumbs"><a href="admin-courses.html">Курсы и запуски</a> / Продвинутый курс</p>
+
+  <section class="card" style="margin-bottom:20px" aria-label="Курс">
+    <div class="person" style="grid-template-columns:minmax(0,1fr) auto">
+      <div>
+        <h1>Продвинутый курс по хирургии стопы</h1>
+        <p>«Современная тотальная хирургия переднего отдела стопы. Введение в хирургию плоско-вальгусной стопы» · кадаверный семинар · 2 дня</p>
+        <div class="person__meta"><span class="badge badge--warn">Хирургия стопы</span><span class="badge">16 ак. ч. (пример)</span><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></div>
+      </div>
+      <div class="p-pagehead__actions"><button class="btn btn--primary" type="button" data-toast="Сохранено. Уйдёт на ИХС, FD, RF при следующем обмене.">Сохранить</button></div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Разделы курса" data-tabs>
+      <button type="button" role="tab" data-tab="runs" aria-selected="true">Запуски <span class="badge">4</span></button>
+      <button type="button" role="tab" data-tab="about" aria-selected="false" tabindex="-1">О курсе</button>
+      <button type="button" role="tab" data-tab="mats" aria-selected="false" tabindex="-1">Материалы</button>
+    </div>
+  </section>
+
+  <section class="card" data-tabpanel="runs" aria-label="Запуски">
+    <div class="card__head"><div><h2>Запуски</h2><p class="muted">Новый запуск — копия прошлого: место, цена, места и программа переносятся, даты — новые.</p></div>
+      <button class="btn btn--accent btn--sm" type="button" data-drawer-open="runDrawer">+ Запуск копией прошлого</button></div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th scope="col">Даты</th><th scope="col">Место</th><th scope="col">Статус</th><th scope="col">Места</th><th scope="col">Цена</th><th scope="col">Программа</th></tr></thead>
+        <tbody>
+          <tr><td><b>23–24 октября 2026</b><br><span class="muted">10:00–18:00</span></td><td>Тренинг-центр ГКБ № 67, Москва, ул. Саляма Адиля, д. 7, стр. 4</td><td><span class="badge">прошёл</span></td><td>18 / 18</td><td>140 000 ₽<br><span class="muted">≠ цене услуги</span></td><td><a class="btn btn--outline btn--sm" href="admin-program.html">Программа · 50 пунктов</a></td></tr>
+          <tr><td><b>12–13 июня 2026</b></td><td>РНИМУ, Москва</td><td><span class="badge">прошёл</span></td><td>16 / 18</td><td>105 000 ₽</td><td><a class="linkbtn" href="admin-program.html">Программа</a></td></tr>
+          <tr><td><b>9–10 апреля 2026</b></td><td>Тренинг-центр ГКБ № 67</td><td><span class="badge">прошёл</span></td><td>18 / 18</td><td>105 000 ₽</td><td><a class="linkbtn" href="admin-program.html">Программа</a></td></tr>
+          <tr><td><b>Апрель 2027</b><br><span class="muted">даты не назначены</span></td><td>Тренинг-центр ГКБ № 67</td><td><span class="badge">черновик · не на сайтах</span></td><td>0 / 18</td><td>—</td><td><span class="badge badge--warn">копия октября</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend"><span>Статусы: черновик → идёт запись → мест нет → прошёл; отдельно — перенесён, отменён.</span><span>Места заняты — по оплаченным заявкам с сайта ИХС.</span></div>
+  </section>
+
+  <section class="card" data-tabpanel="about" hidden aria-label="О курсе">
+    <div class="card__head"><h2>О курсе</h2><span class="muted">Постоянное — общее для всех запусков</span></div>
+    <div class="card__body"><div class="fgrid">
+      <div class="field"><label for="c-title">Название</label><input class="input" id="c-title" value="Продвинутый курс по хирургии стопы"></div>
+      <div class="field"><label for="c-dir">Направление</label><select class="select" id="c-dir"><option selected>Хирургия стопы</option><option>Ортопедия стопы</option></select></div>
+      <div class="field full"><label for="c-sub">Тема</label><input class="input" id="c-sub" value="Современная тотальная хирургия переднего отдела стопы. Введение в хирургию плоско-вальгусной стопы"></div>
+      <div class="field full"><label for="c-desc">Описание</label><textarea class="textarea" id="c-desc">За два дня будут освещены наиболее актуальные хирургические техники, применяемые на переднем и среднем отделах стопы, с обширным тренингом на кадаверном материале. Принцип обучения: лекция по разделу, демонстрация техники ментором на большом экране, затем работа курсантов попарно на кадаверном материале под руководством менторов.</textarea></div>
+      <div class="field"><label for="c-lead">Руководитель курса по умолчанию</label><select class="select" id="c-lead"><option selected>Качесов Антон Владимирович</option><option>Процко В. Г.</option></select><span class="hint">из списка специалистов; у запуска можно поменять</span></div>
+      <div class="field"><label for="c-hours">Часов в удостоверении</label><input class="input" id="c-hours" value="16" inputmode="numeric"><span class="hint">ак. ч. — уточнить с учебной частью</span></div>
+      <div class="field"><label for="c-svc">Услуга в 1С</label><select class="select" id="c-svc"><option selected>Продвинутый курс по хирургии стопы — 105 000 ₽</option></select><span class="hint">приходит из обмена с 1С; на сайте — поле SURGERY_SERVICE_ID</span></div>
+      <div class="field"><label for="c-doc">Документ по итогам</label><select class="select" id="c-doc"><option selected>Удостоверение о повышении квалификации</option><option>Сертификат участника</option></select></div>
+    </div></div>
+  </section>
+
+  <section class="card" data-tabpanel="mats" hidden aria-label="Материалы">
+    <div class="card__head"><h2>Материалы</h2><span class="muted">три уровня доступа (facts 2026-10-28)</span></div>
+    <div class="card__body"><p class="muted" style="margin:0">Публичные — на странице курса; для участников запуска — «До курса» и «После курса» в кабинете слушателя; личные — конкретному слушателю. Экран — следующим этапом.</p></div>
+  </section>
+</main>
+</div>
+
+<div class="backdrop" data-drawer-close hidden></div>
+<div class="drawer" id="runDrawer" role="dialog" aria-modal="true" aria-labelledby="hRun" hidden>
+  <div class="drawer__head"><h2 id="hRun">Новый запуск</h2><button class="iconbtn" type="button" data-drawer-close aria-label="Закрыть">×</button></div>
+  <div class="drawer__body">
+    <div class="field"><label for="r-from">Копия запуска</label><select class="select" id="r-from"><option>23–24 октября 2026</option><option>12–13 июня 2026</option></select></div>
+    <div class="fgrid">
+      <div class="field"><label for="r-d1">Первый день</label><input class="input" id="r-d1" type="date" value="2027-04-09"></div>
+      <div class="field"><label for="r-d2">Последний день</label><input class="input" id="r-d2" type="date" value="2027-04-10"></div>
+    </div>
+    <span class="label">Что перенести</span>
+    <div style="display:grid;gap:8px;margin:8px 0 16px">
+      <label class="check"><input type="checkbox" checked><span>Программу (время и темы)</span></label>
+      <label class="check"><input type="checkbox" checked><span>Докладчиков в программе</span></label>
+      <label class="check"><input type="checkbox" checked><span>Место, число мест и цену</span></label>
+      <label class="check"><input type="checkbox"><span>Материалы «До курса»</span></label>
+    </div>
+    <p class="hint">Запуск создаётся черновиком и на сайтах не виден, пока не выбран статус «идёт запись».</p>
+  </div>
+  <div class="drawer__foot"><button class="btn btn--outline" type="button" data-drawer-close>Отмена</button><button class="btn btn--primary" type="button" data-drawer-close data-toast="Черновик запуска 9–10 апреля 2027 создан">Создать черновик</button></div>
+</div>
+
+<script src="../js/panel.js"></script>
+</body>
+</html>

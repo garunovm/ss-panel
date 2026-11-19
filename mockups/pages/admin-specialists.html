@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Специалисты — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="specialists">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → Специалисты. Source of truth for all three sites (facts 2026-11-03). One card = one person
+     (doctor, teacher, speaker at once). Columns: roles, publication per site, account, pending edits, lock.
+     Names from the real programme of the advanced course 23–24 Oct 2026 and the site mockups. -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs">Специалисты</p>
+      <h1>Специалисты</h1>
+      <p class="muted" style="margin:4px 0 0">Врачи, преподаватели и докладчики — одна карточка на человека. Отсюда карточки уходят на сайты ИХС, FD и RF.</p>
+    </div>
+    <div class="p-pagehead__actions">
+      <a class="btn btn--outline" href="admin-card-schema.html">Схема карточки</a>
+      <button class="btn btn--accent" type="button" data-toast="Макет: откроется пустая карточка нового специалиста">+ Добавить специалиста</button>
+    </div>
+  </div>
+
+  <div class="grid grid--4" style="margin-bottom:20px">
+    <div class="card stat"><b>12</b><span>специалистов</span></div>
+    <div class="card stat"><b>5</b><span>ведут приём</span></div>
+    <div class="card stat"><b>4</b><span>с учётной записью</span></div>
+    <a class="card stat stat--accent" href="admin-queue.html" style="text-decoration:none;color:inherit"><b>3</b><span>на подтверждение (правки и клиника) →</span></a>
+  </div>
+
+  <section class="card" aria-labelledby="hList">
+    <h2 class="vh" id="hList">Список специалистов</h2>
+    <div class="toolbar">
+      <label class="vh" for="q">Поиск по ФИО</label>
+      <input class="input" id="q" type="search" placeholder="Фамилия, город, регалии" data-search="#spec">
+      <div class="chips" role="group" aria-label="Фильтр" data-filter="#spec">
+        <button class="chip" type="button" data-tag="" aria-pressed="true">Все</button>
+        <button class="chip" type="button" data-tag="clinic" aria-pressed="false">Ведут приём</button>
+        <button class="chip" type="button" data-tag="mentor" aria-pressed="false">Преподают</button>
+        <button class="chip" type="button" data-tag="pending" aria-pressed="false">Есть правки</button>
+        <button class="chip" type="button" data-tag="noacc" aria-pressed="false">Без учётной записи</button>
+      </div>
+      <span class="toolbar__count" data-count="#spec" aria-live="polite"></span>
+    </div>
+    <div class="table-wrap">
+      <table class="table" id="spec">
+        <thead><tr><th scope="col">Специалист</th><th scope="col">Роли</th><th scope="col">Публикация</th><th scope="col">Учётная запись</th><th scope="col">Статус</th></tr></thead>
+        <tbody>
+          <tr data-tags="mentor">
+            <td><div class="who"><span class="p-ava p-ava--md">ПВ</span><span><a href="admin-specialist.html">Процко В. Г.</a><small>д.м.н., профессор · ректор ИХС</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--warn">ментор курсов</span><span class="badge">докладчик</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on" title="ИХС: опубликован">ИХС</span><span class="site site--fd is-on" title="FD: опубликован">FD</span><span class="site site--rf is-on" title="RF: опубликован">RF</span></span></td>
+            <td><span class="badge badge--ok">есть</span></td>
+            <td><span class="muted">—</span></td>
+          </tr>
+          <tr data-tags="mentor clinic pending">
+            <td><div class="who"><span class="p-ava p-ava--md"><img src="../img/cherevcov.jpg" alt=""></span><span><a href="admin-specialist.html">Черевцов Виталий Николаевич</a><small>травматолог-ортопед · Москва</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--blue">ведёт приём</span><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on" title="ИХС: опубликован">ИХС</span><span class="site site--fd is-on" title="FD: опубликован">FD</span><span class="site site--rf is-on" title="RF: опубликован">RF</span></span></td>
+            <td><span class="badge badge--ok">есть</span> <span class="muted">+ ассистент</span></td>
+            <td><a class="badge badge--warn" href="admin-queue.html">2 правки ждут</a></td>
+          </tr>
+          <tr data-tags="clinic mentor">
+            <td><div class="who"><span class="p-ava p-ava--md"><img src="../img/tamoev.jpg" alt=""></span><span><a href="admin-specialist.html">Тамоев Саргон Константинович</a><small>к.м.н., заведующий отделением · Москва</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--blue">ведёт приём</span><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf is-on">RF</span></span></td>
+            <td><span class="badge badge--ok">есть</span></td>
+            <td><span class="lock"><span class="p-ava" aria-hidden="true" style="background:#0068B0;color:#fff">ПА</span>правит Петрова А.</span></td>
+          </tr>
+          <tr data-tags="clinic mentor">
+            <td><div class="who"><span class="p-ava p-ava--md"><img src="../img/gorohov.jpg" alt=""></span><span><a href="admin-specialist.html">Горохов Антон Владимирович</a><small>высшая категория · Москва</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--blue">ведёт приём</span><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge badge--ok">есть</span></td>
+            <td><span class="muted">—</span></td>
+          </tr>
+          <tr data-tags="clinic mentor">
+            <td><div class="who"><span class="p-ava p-ava--md"><img src="../img/ziatdinov.jpg" alt=""></span><span><a href="admin-specialist.html">Зиатдинов Булат Гумарович</a><small>травматолог-ортопед · Москва</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--blue">ведёт приём</span><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="muted">—</span></td>
+          </tr>
+          <tr data-tags="clinic noacc">
+            <td><div class="who"><span class="p-ava p-ava--md"><img src="../img/pakhomov.jpg" alt=""></span><span><a href="admin-specialist.html">Пахомов Игорь Анатольевич</a><small>д.м.н. · Москва</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--blue">ведёт приём</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="muted">—</span></td>
+          </tr>
+          <tr data-tags="mentor noacc">
+            <td><div class="who"><span class="p-ava p-ava--md">КА</span><span><a href="admin-specialist.html">Качесов Антон Владимирович</a><small>к.м.н. · Нижний Новгород · руководитель продвинутого курса</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="muted">—</span></td>
+          </tr>
+          <tr data-tags="mentor noacc">
+            <td><div class="who"><span class="p-ava p-ava--md">КМ</span><span><a href="admin-specialist.html">Кетов М. С.</a><small>ФИО полностью — уточнить</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="badge badge--bad">не заполнено: фото, регалии</span></td>
+          </tr>
+          <tr data-tags="mentor noacc">
+            <td><div class="who"><span class="p-ava p-ava--md">КВ</span><span><a href="admin-specialist.html">Кузнецов В. В.</a><small>ФИО полностью — уточнить</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="badge badge--bad">не заполнено: фото</span></td>
+          </tr>
+          <tr data-tags="mentor noacc">
+            <td><div class="who"><span class="p-ava p-ava--md">СВ</span><span><a href="admin-specialist.html">Скребцов В. В.</a><small>докладчик: технология Vencer</small></span></div></td>
+            <td><div class="roles"><span class="badge">докладчик</span></div></td>
+            <td><span class="sites"><span class="site site--ss">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="badge">черновик</span></td>
+          </tr>
+          <tr data-tags="mentor noacc">
+            <td><div class="who"><span class="p-ava p-ava--md">СА</span><span><a href="admin-specialist.html">Скребцов А. В.</a><small>ФИО полностью — уточнить</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="muted">—</span></td>
+          </tr>
+          <tr data-tags="mentor noacc">
+            <td><div class="who"><span class="p-ava p-ava--md">ЯД</span><span><a href="admin-specialist.html">Якушев Д. С.</a><small>ФИО полностью — уточнить</small></span></div></td>
+            <td><div class="roles"><span class="badge badge--warn">ментор курсов</span></div></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span></td>
+            <td><span class="badge">нет</span></td>
+            <td><span class="muted">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><span class="site site--ss is-on">ИХС</span> опубликован на сайте</span>
+      <span><span class="site site--fd">FD</span> не публикуется</span>
+      <span>«Правит …» — карточку сейчас открыл другой сотрудник (обновляется вживую)</span>
+    </div>
+  </section>
+</main>
+</div>
+<script src="../js/panel.js"></script>
+</body>
+</html>

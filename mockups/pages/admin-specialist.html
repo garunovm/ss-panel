@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Черевцов В. Н. — Специалисты — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="specialists">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → Специалисты → карточка. Fields come from «Схема карточки» (the admin adds properties).
+     Each field shows its flags: «врач правит», «через подтверждение», «внутреннее» (never leaves the panel —
+     the API does not see it, access.plans.md). Presence (WebSocket, admin.* only): demo button below. -->
+<main class="p-content" id="main" data-tabs-root>
+  <p class="p-crumbs"><a href="admin-specialists.html">Специалисты</a> / Черевцов В. Н.</p>
+
+  <div class="presence" data-presence hidden role="status">
+    <span class="presence__dot" aria-hidden="true"></span>
+    <span class="p-ava" aria-hidden="true">ПА</span>
+    <span><b>Петрова А.</b> (учебная часть) сейчас правит поле «Регалии». Остальные поля свободны; её изменения появятся у вас сами.</span>
+  </div>
+
+  <section class="card" style="margin-bottom:20px" aria-label="Специалист">
+    <div class="person">
+      <span class="p-ava p-ava--lg"><img src="../img/cherevcov.jpg" alt="Фото: Черевцов В. Н."></span>
+      <div>
+        <h1>Черевцов Виталий Николаевич</h1>
+        <p>Травматолог-ортопед · Москва · общий ID <code>SP-000014</code></p>
+        <div class="person__meta">
+          <span class="badge badge--blue">ведёт приём</span><span class="badge badge--warn">ментор курсов</span>
+          <span class="sites" aria-label="Публикация"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span>
+          <a class="badge badge--warn" href="admin-queue.html">2 правки врача ждут подтверждения</a>
+        </div>
+      </div>
+      <div class="person__side p-pagehead__actions">
+        <button class="btn btn--outline btn--sm" type="button" data-presence-demo aria-pressed="false">Демо: коллега открыл карточку</button>
+        <button class="btn btn--primary" type="button" data-toast="Сохранено. Изменения уйдут на ИХС, FD, RF при следующем обмене (до 5 минут).">Сохранить</button>
+      </div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Разделы карточки" data-tabs>
+      <button type="button" role="tab" data-tab="data" aria-selected="true">Данные</button>
+      <button type="button" role="tab" data-tab="pub" aria-selected="false" tabindex="-1">Публикация</button>
+      <button type="button" role="tab" data-tab="acc" aria-selected="false" tabindex="-1">Учётная запись</button>
+      <button type="button" role="tab" data-tab="slots" aria-selected="false" tabindex="-1">Слоты</button>
+      <button type="button" role="tab" data-tab="courses" aria-selected="false" tabindex="-1">Курсы <span class="badge">3</span></button>
+      <button type="button" role="tab" data-tab="log" aria-selected="false" tabindex="-1">Журнал</button>
+    </div>
+  </section>
+
+  <div class="grid grid--side">
+    <div style="min-width:0">
+      <!-- Данные -->
+      <section class="card" data-tabpanel="data" aria-label="Данные">
+        <div class="card__head"><div><h2>Данные карточки</h2><p class="muted">Поля и отметки — из <a href="admin-card-schema.html">схемы карточки</a>.</p></div>
+          <span class="muted"><span class="flag flag--doc">врач правит</span> <span class="flag flag--ok">через подтверждение</span> <span class="flag flag--int">внутреннее</span></span></div>
+        <div class="card__body">
+          <div class="fgrid">
+            <div class="field"><label for="f-last">Фамилия <span class="flag flag--ok">через подтверждение</span></label><input class="input" id="f-last" value="Черевцов"></div>
+            <div class="field"><label for="f-first">Имя, отчество <span class="flag flag--ok">через подтверждение</span></label><input class="input" id="f-first" value="Виталий Николаевич"></div>
+            <div class="field"><label for="f-spec">Специальность <span class="flag flag--doc">врач правит</span></label><select class="select" id="f-spec"><option selected>Травматолог-ортопед</option><option>Хирург</option><option>Подолог</option></select><span class="hint">общий справочник экосистемы</span></div>
+            <div class="field"><label for="f-city">Город</label><input class="input" id="f-city" value="Москва"></div>
+            <div class="field"><label for="f-deg">Учёная степень <span class="flag flag--ok">через подтверждение</span></label><select class="select" id="f-deg"><option selected>Нет</option><option>Кандидат медицинских наук</option><option>Доктор медицинских наук</option></select></div>
+            <div class="field"><label for="f-since">Стаж с года <span class="flag flag--doc">врач правит</span></label><input class="input" id="f-since" inputmode="numeric" value="2004"><span class="hint">на сайте: «22+ лет стаж работы» (считается сам)</span></div>
+            <div class="field full" data-lockable><label for="f-reg">Регалии и должность <span class="flag flag--doc">врач правит</span> <span class="flag flag--ok">через подтверждение</span></label><textarea class="textarea" id="f-reg" data-live-target="Травматолог-ортопед, врач высшей категории. Ментор курсов Института хирургии стопы.">Травматолог-ортопед. Ментор курсов Института хирургии стопы.</textarea></div>
+            <div class="field full"><span class="label">Направления <span class="flag flag--doc">врач правит</span></span>
+              <ul class="list-edit">
+                <li><span class="drag" aria-hidden="true">⋮⋮</span><span>Хирургия переднего отдела стопы</span><button class="linkbtn" type="button" aria-label="Удалить: Хирургия переднего отдела стопы">✕</button></li>
+                <li><span class="drag" aria-hidden="true">⋮⋮</span><span>Неврома Мортона</span><button class="linkbtn" type="button" aria-label="Удалить: Неврома Мортона">✕</button></li>
+                <li><span class="drag" aria-hidden="true">⋮⋮</span><span>Хирургическая анатомия стопы (преподавание)</span><button class="linkbtn" type="button" aria-label="Удалить: Хирургическая анатомия стопы">✕</button></li>
+              </ul>
+              <button class="btn btn--outline btn--sm" type="button" data-toast="Макет: добавится строка">+ Направление</button>
+            </div>
+            <div class="field full"><span class="label">Образование <span class="flag flag--doc">врач правит</span></span>
+              <ul class="list-edit">
+                <li><span class="drag" aria-hidden="true">⋮⋮</span><span>2002 — медицинский университет (пример)</span><button class="linkbtn" type="button" aria-label="Удалить строку">✕</button></li>
+                <li><span class="drag" aria-hidden="true">⋮⋮</span><span>2002–2004 — ординатура по травматологии и ортопедии (пример)</span><button class="linkbtn" type="button" aria-label="Удалить строку">✕</button></li>
+              </ul>
+              <button class="btn btn--outline btn--sm" type="button" data-toast="Макет: добавится строка">+ Строка</button>
+            </div>
+            <div class="field full"><span class="label">Профессиональные сообщества <span class="flag flag--doc">врач правит</span></span>
+              <ul class="list-edit"><li><span class="drag" aria-hidden="true">⋮⋮</span><span>Член RUSFAS</span><button class="linkbtn" type="button" aria-label="Удалить строку">✕</button></li></ul>
+            </div>
+            <div class="field full"><label for="f-note">Заметка для сотрудников <span class="flag flag--int">внутреннее</span></label><textarea class="textarea" id="f-note">Связь через ассистента Ольгу. Счёт за лекции — через FD.</textarea><span class="hint">Не уходит на сайты и не видна врачу: API этого поля не видит.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Публикация -->
+      <section class="card" data-tabpanel="pub" hidden aria-label="Публикация">
+        <div class="card__head"><div><h2>Где публикуется</h2><p class="muted">Карточка на сайтах правится только здесь; у контент-менеджеров сайтов правка закрыта.</p></div></div>
+        <div class="card__body">
+          <div class="pubrow"><span class="site site--ss is-on">ИХС</span><span><b>surgeryschool.ru</b><small>/specialists/cherevcov/ · запись на приём включена · обновлено сегодня, 09:10</small></span><label class="switch"><input type="checkbox" checked aria-label="Публиковать на ИХС"><span></span></label></div>
+          <div class="pubrow"><span class="site site--fd is-on">FD</span><span><b>footdoctor.ru</b><small>как ментор курсов · обновлено сегодня, 09:10</small></span><label class="switch"><input type="checkbox" checked aria-label="Публиковать на FD"><span></span></label></div>
+          <div class="pubrow"><span class="site site--rf is-on">RF</span><span><b>rusfas.org</b><small>в списке спикеров · обновлено сегодня, 09:10</small></span><label class="switch"><input type="checkbox" checked aria-label="Публиковать на RF"><span></span></label></div>
+          <p class="muted" style="margin:16px 0 0">Сайт забирает изменения сам раз в несколько минут; ночью — полная сверка (<code>api.plans.md</code>).</p>
+        </div>
+      </section>
+
+      <!-- Учётная запись -->
+      <section class="card" data-tabpanel="acc" hidden aria-label="Учётная запись">
+        <div class="card__head"><div><h2>Учётная запись в кабинете врача</h2><p class="muted">Заводит админ. Врач входит на <code>doctor.*</code> и правит только свою карточку и разрешённые поля.</p></div></div>
+        <div class="card__body">
+          <dl class="kv">
+            <div><dt>Вход</dt><dd>cherevcov@example.ru · последний вход 18.11.2026</dd></div>
+            <div><dt>Роль</dt><dd>врач</dd></div>
+            <div><dt>Ассистенты</dt><dd>Ольга К. — слоты и записи <button class="linkbtn" type="button" data-toast="Макет: выбор ассистента">изменить</button></dd></div>
+          </dl>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px"><button class="btn btn--outline btn--sm" type="button" data-toast="Ссылка для входа отправлена врачу">Отправить ссылку для входа</button><button class="btn btn--danger btn--sm" type="button" data-toast="Макет: доступ закрыт, карточка остаётся">Закрыть доступ</button></div>
+        </div>
+      </section>
+
+      <!-- Слоты -->
+      <section class="card" data-tabpanel="slots" hidden aria-label="Слоты">
+        <div class="card__head"><div><h2>Слоты приёма</h2><p class="muted">Ведёт ассистент в кабинете врача; здесь — только просмотр.</p></div></div>
+        <div class="table-wrap"><table class="table"><thead><tr><th scope="col">Клиника</th><th scope="col">Дни и часы</th><th scope="col">Приём</th><th scope="col">Исключения</th></tr></thead>
+          <tbody><tr><td>Ортопедический салон, Москва (пример)</td><td>пн, ср 10:00–14:00</td><td>30 мин</td><td>отпуск 28.12–10.01</td></tr>
+          <tr><td>НПО «Сурсил-орто», г. Жуковский</td><td>пт 11:00–15:00</td><td>30 мин</td><td>—</td></tr></tbody></table></div>
+      </section>
+
+      <!-- Курсы -->
+      <section class="card" data-tabpanel="courses" hidden aria-label="Курсы">
+        <div class="card__head"><div><h2>В программах курсов</h2><p class="muted">Собирается из программ сам; на сайте — блок «Ведёт курсы».</p></div></div>
+        <div class="table-wrap"><table class="table"><thead><tr><th scope="col">Запуск</th><th scope="col">Темы</th></tr></thead>
+          <tbody><tr><td>Продвинутый курс · 23–24 октября 2026</td><td>Хирургическая анатомия стопы; Клинический осмотр стопы; Реконструкция плантарной пластинки «малых» лучей; Неврома Мортона</td></tr>
+          <tr><td>Мастер-курс · 27–28 ноября 2026</td><td>2 темы</td></tr>
+          <tr><td>Базовый курс · 19–20 декабря 2026</td><td>программа в работе</td></tr></tbody></table></div>
+      </section>
+
+      <!-- Журнал -->
+      <section class="card" data-tabpanel="log" hidden aria-label="Журнал">
+        <div class="card__head"><h2>Журнал изменений</h2></div>
+        <div class="card__body"><ol class="log">
+          <li><span class="p-ava"><img src="../img/cherevcov.jpg" alt=""></span><span><b>Черевцов В. Н.</b> (врач) предложил новое фото и «Регалии» — ждёт подтверждения<time>19.11.2026, 08:52 · doctor.*</time></span></li>
+          <li><span class="p-ava">ИС</span><span><b>Смирнова И.</b> включила публикацию на RF<time>12.11.2026, 15:30 · admin.*</time></span></li>
+          <li><span class="p-ava">ИС</span><span><b>Смирнова И.</b>: «Стаж с года» <del>2005</del> → <ins>2004</ins><time>12.11.2026, 15:28 · admin.*</time></span></li>
+          <li><span class="p-ava">АД</span><span><b>Администратор</b> создал учётную запись врача и привязал к карточке<time>03.11.2026, 10:00</time></span></li>
+        </ol></div>
+      </section>
+    </div>
+
+    <aside class="grid" aria-label="Сводка">
+      <section class="card"><div class="card__head"><h2>Публикация</h2></div><div class="card__body">
+        <div class="pubrow"><span class="site site--ss is-on">ИХС</span><span>сайт ИХС</span><span class="badge badge--ok">✓</span></div>
+        <div class="pubrow"><span class="site site--fd is-on">FD</span><span>FootDoctor</span><span class="badge badge--ok">✓</span></div>
+        <div class="pubrow"><span class="site site--rf is-on">RF</span><span>RUSFAS</span><span class="badge badge--ok">✓</span></div>
+      </div></section>
+      <section class="card"><div class="card__head"><h2>Ждёт подтверждения</h2><a class="linkbtn" href="admin-queue.html">в очередь</a></div><div class="card__body">
+        <ol class="log"><li><span class="p-ava"><img src="../img/cherevcov.jpg" alt=""></span><span>Новое фото<time>от врача, 19.11 08:52</time></span></li>
+        <li><span class="p-ava"><img src="../img/cherevcov.jpg" alt=""></span><span>«Регалии и должность»<time>от врача, 19.11 08:52</time></span></li></ol>
+      </div></section>
+      <section class="card"><div class="card__head"><h2>Сейчас в карточке</h2></div><div class="card__body">
+        <p class="muted" style="margin:0">Только вы. Если карточку откроет коллега, здесь и над карточкой появится его имя, а поле, которое он правит, закроется для вас до сохранения.</p>
+      </div></section>
+    </aside>
+  </div>
+</main>
+</div>
+<script src="../js/panel.js"></script>
+</body>
+</html>

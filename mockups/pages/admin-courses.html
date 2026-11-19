@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Курсы и запуски — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="courses">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → Курсы и запуски. ИХС owns every course; the panel is the source of truth (facts 2026-10-28).
+     Course = programme (permanent page /study/), run = dates; one 1С service per course (SURGERY_SERVICE_ID on
+     the site). A run has its own dates, place, status, seats, price and programme (site.plans.md
+     «Курс, запуски и услуга»). Runs below are from content\Курсы\2026 and the site mockups. -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs">Обучение</p>
+      <h1>Курсы и запуски</h1>
+      <p class="muted" style="margin:4px 0 0">Курс — программа, запуск — конкретные даты. Отсюда курсы уходят на сайты ИХС, FD и RF; запись и оплата — на сайте ИХС.</p>
+    </div>
+    <div class="p-pagehead__actions">
+      <button class="btn btn--outline" type="button" data-toast="Макет: план запусков на год — копии выбранных запусков на новые даты">План на 2027</button>
+      <button class="btn btn--accent" type="button" data-toast="Макет: откроется новый курс">+ Курс</button>
+    </div>
+  </div>
+
+  <div class="grid grid--4" style="margin-bottom:20px">
+    <div class="card stat"><b>5</b><span>курсов</span></div>
+    <div class="card stat stat--accent"><b>4</b><span>запуска впереди</span></div>
+    <div class="card stat"><b>27–28.11</b><span>ближайший: мастер-курс</span></div>
+    <div class="card stat"><b>1</b><span>программа не готова (базовый, декабрь)</span></div>
+  </div>
+
+  <section class="card" aria-labelledby="hC">
+    <h2 class="vh" id="hC">Курсы</h2>
+    <div class="toolbar">
+      <label class="vh" for="q">Поиск курса</label>
+      <input class="input" id="q" type="search" placeholder="Название курса" data-search="#courses">
+      <div class="chips" role="group" aria-label="Направление" data-filter="#courses">
+        <button class="chip" type="button" data-tag="" aria-pressed="true">Все</button>
+        <button class="chip" type="button" data-tag="surgery" aria-pressed="false">Хирургия стопы</button>
+        <button class="chip" type="button" data-tag="ortho" aria-pressed="false">Ортопедия стопы</button>
+      </div>
+      <span class="toolbar__count" data-count="#courses" aria-live="polite"></span>
+    </div>
+    <div class="table-wrap">
+      <table class="table" id="courses">
+        <thead><tr><th scope="col">Курс</th><th scope="col">Услуга 1С</th><th scope="col">Запуски</th><th scope="col">Публикация</th></tr></thead>
+        <tbody>
+          <tr data-tags="surgery">
+            <td><div class="who"><span><a href="admin-course.html">Продвинутый курс по хирургии стопы</a><small>Хирургия стопы · кадаверный · 2 дня · руководитель Качесов А. В.</small></span></div></td>
+            <td>105 000 ₽<br><span class="muted">цена 1С, 2024</span></td>
+            <td><span class="muted">2026:</span> 9–10.04 ✓ · 12–13.06 ✓ · <a href="admin-program.html">23–24.10</a> ✓<br><span class="badge">2027 — не заведены</span></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></td>
+          </tr>
+          <tr data-tags="surgery">
+            <td><div class="who"><span><a href="admin-course.html">Мастер-курс по хирургии стопы</a><small>Хирургия стопы · кадаверный · 2 дня</small></span></div></td>
+            <td>140 000 ₽</td>
+            <td><b>27–28.11.2026</b> <span class="badge badge--ok">идёт запись · 4 места</span></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></td>
+          </tr>
+          <tr data-tags="surgery">
+            <td><div class="who"><span><a href="admin-course.html">Базовый курс по хирургии стопы</a><small>Хирургия стопы · 2 дня</small></span></div></td>
+            <td>52 400 ₽</td>
+            <td><span class="muted">2026:</span> 14–15.03 ✓ · 19–20.09 ✓ · <b>19–20.12</b> <span class="badge badge--warn">программа в работе</span></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></td>
+          </tr>
+          <tr data-tags="surgery">
+            <td><div class="who"><span><a href="admin-course.html">Застарелые переломы пяточной кости</a><small>Хирургия стопы · 2 дня</small></span></div></td>
+            <td><span class="badge badge--bad">нет услуги в 1С</span></td>
+            <td><span class="muted">2026:</span> 26–27.09 ✓</td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf is-on">RF</span></span></td>
+          </tr>
+          <tr data-tags="ortho">
+            <td><div class="who"><span><a href="admin-course.html">Ортопедия стопы от «А» до «Я»</a><small>Ортопедия стопы · 2 дня · г. Жуковский</small></span></div></td>
+            <td>35 600 ₽</td>
+            <td><b>5–6.03.2027</b> <span class="badge badge--ok">идёт запись</span> · 4–5.06.2027 <span class="badge">черновик</span></td>
+            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend"><span>✓ — запуск прошёл</span><span>Цена у запуска может отличаться от цены услуги (подтвердить с бухгалтерией)</span></div>
+  </section>
+</main>
+</div>
+<script src="../js/panel.js"></script>
+</body>
+</html>

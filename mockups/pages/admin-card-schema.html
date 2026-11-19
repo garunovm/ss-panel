@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Схема карточки — Панель ИХС (макет)</title>
+<link rel="icon" href="../img/logo.png" type="image/png">
+<link rel="stylesheet" href="../css/panel.css">
+</head>
+<body data-app="admin" data-page="schema">
+<div data-shell="side"></div>
+<div class="p-main">
+<div data-shell="head"></div>
+
+<!-- admin.* → Схема карточки (access.plans.md): the admin adds and edits card properties without a programmer,
+     like iblock properties in Bitrix. Per property: type, multiple, required, «врач правит»,
+     «через подтверждение», «на сайты» (off = internal: never in exchange tables, the API cannot read it).
+     System fields (ФИО, фото, публикация) cannot be deleted. Only the admin role sees this screen. -->
+<main class="p-content" id="main">
+  <div class="p-pagehead">
+    <div>
+      <p class="p-crumbs"><a href="admin-specialists.html">Специалисты</a> / Схема карточки</p>
+      <h1>Схема карточки специалиста</h1>
+      <p class="muted" style="margin:4px 0 0">Какие поля есть у карточки и кто их правит. Новое поле сразу появляется в карточках; на сайты уходит, только если включено «На сайты».</p>
+    </div>
+    <div class="p-pagehead__actions"><button class="btn btn--accent" type="button" data-drawer-open="propDrawer">+ Добавить свойство</button></div>
+  </div>
+
+  <section class="card" aria-labelledby="hProps">
+    <div class="card__head"><h2 id="hProps">Свойства (12)</h2><span class="muted">Только админ. Порядок — перетаскиванием, как в карточке.</span></div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th scope="col">Свойство</th><th scope="col">Тип</th><th scope="col">Обязательное</th><th scope="col">Врач правит</th><th scope="col">Через подтверждение</th><th scope="col">На сайты</th><th scope="col"><span class="vh">Действия</span></th></tr></thead>
+        <tbody>
+          <tr class="sys-row"><td><b>Фамилия, имя, отчество</b><br><span class="muted">системное</span></td><td><span class="ptype"><code>строка</code> ×3</span></td><td class="c yes">да</td><td class="c yes">да</td><td class="c yes">да</td><td class="c yes">да</td><td><span class="muted">нельзя удалить</span></td></tr>
+          <tr class="sys-row"><td><b>Фото</b><br><span class="muted">системное</span></td><td><span class="ptype"><code>изображение</code></span></td><td class="c no">нет</td><td class="c yes">да</td><td class="c yes">да</td><td class="c yes">да</td><td><span class="muted">нельзя удалить</span></td></tr>
+          <tr><td><b>Специальность</b></td><td><span class="ptype"><code>справочник</code> общий экосистемы</span></td><td class="c yes">да</td><td class="c yes">да</td><td class="c no">нет</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Город</b></td><td><span class="ptype"><code>строка</code></span></td><td class="c no">нет</td><td class="c no">нет</td><td class="c no">—</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Учёная степень</b></td><td><span class="ptype"><code>список</code> нет / к.м.н. / д.м.н.</span></td><td class="c no">нет</td><td class="c yes">да</td><td class="c yes">да</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Стаж с года</b></td><td><span class="ptype"><code>год</code></span></td><td class="c no">нет</td><td class="c yes">да</td><td class="c no">нет</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Регалии и должность</b></td><td><span class="ptype"><code>текст</code></span></td><td class="c no">нет</td><td class="c yes">да</td><td class="c yes">да</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Направления</b></td><td><span class="ptype"><code>строка</code> несколько</span></td><td class="c no">нет</td><td class="c yes">да</td><td class="c no">нет</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Образование</b></td><td><span class="ptype"><code>строка</code> несколько</span></td><td class="c no">нет</td><td class="c yes">да</td><td class="c no">нет</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Профессиональные сообщества</b></td><td><span class="ptype"><code>строка</code> несколько</span></td><td class="c no">нет</td><td class="c yes">да</td><td class="c no">нет</td><td class="c yes">да</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+          <tr><td><b>Роли</b><br><span class="muted">системное</span></td><td><span class="ptype"><code>флажки</code> ведёт приём / ментор / докладчик</span></td><td class="c no">нет</td><td class="c no">нет</td><td class="c no">—</td><td class="c yes">да</td><td><span class="muted">нельзя удалить</span></td></tr>
+          <tr><td><b>Заметка для сотрудников</b></td><td><span class="ptype"><code>текст</code></span></td><td class="c no">нет</td><td class="c no">нет</td><td class="c no">—</td><td class="c no">нет — внутреннее</td><td><button class="linkbtn" type="button" data-drawer-open="propDrawer">Изменить</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><b>Врач правит</b> — поле видно и доступно врачу в его кабинете (только в своей карточке).</span>
+      <span><b>Через подтверждение</b> — правка врача ждёт менеджера, на сайтах пока прежнее значение.</span>
+      <span><b>На сайты</b> выключено — поле внутреннее: его нет в таблицах обмена, API его не видит.</span>
+    </div>
+  </section>
+</main>
+</div>
+
+<div class="backdrop" data-drawer-close hidden></div>
+<div class="drawer" id="propDrawer" role="dialog" aria-modal="true" aria-labelledby="hProp" hidden>
+  <div class="drawer__head"><h2 id="hProp">Свойство карточки</h2><button class="iconbtn" type="button" data-drawer-close aria-label="Закрыть">×</button></div>
+  <div class="drawer__body">
+    <div class="field"><label for="p-name">Название</label><input class="input" id="p-name" placeholder="например, «Языки консультаций»"></div>
+    <div class="field"><label for="p-code">Код</label><input class="input" id="p-code" placeholder="languages"><span class="hint">латиница; по нему поле передаётся на сайты и не меняется после создания</span></div>
+    <div class="fgrid">
+      <div class="field"><label for="p-type">Тип</label><select class="select" id="p-type"><option>Строка</option><option>Текст</option><option>Число / год</option><option>Список значений</option><option>Справочник</option><option>Изображение</option><option>Файл</option><option>Да / нет</option><option>Ссылка</option></select></div>
+      <div class="field"><label for="p-group">Группа в карточке</label><select class="select" id="p-group"><option>Основное</option><option>Образование и опыт</option><option>Внутреннее</option></select></div>
+    </div>
+    <div style="display:grid;gap:10px;margin-bottom:16px">
+      <label class="check"><input type="checkbox"><span>Несколько значений</span></label>
+      <label class="check"><input type="checkbox"><span>Обязательное</span></label>
+      <label class="check"><input type="checkbox" checked><span><b>Врач правит</b> — видно и доступно в кабинете врача</span></label>
+      <label class="check"><input type="checkbox" checked><span><b>Через подтверждение</b> — правка врача ждёт менеджера</span></label>
+      <label class="check"><input type="checkbox" checked><span><b>На сайты</b> — передаётся через API</span></label>
+    </div>
+    <span class="label">На каких сайтах показывать</span>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px">
+      <label class="check"><input type="checkbox" checked><span>ИХС</span></label>
+      <label class="check"><input type="checkbox" checked><span>FD</span></label>
+      <label class="check"><input type="checkbox"><span>RF</span></label>
+    </div>
+    <p class="hint" style="margin-top:16px">Чтобы поле появилось на странице специалиста, у сайта должно быть место под него в шаблоне. Новое поле без места в шаблоне сайт примет и сохранит, но не покажет.</p>
+  </div>
+  <div class="drawer__foot"><button class="btn btn--outline" type="button" data-drawer-close>Отмена</button><button class="btn btn--primary" type="button" data-drawer-close data-toast="Свойство добавлено во все карточки">Сохранить</button></div>
+</div>
+
+<script src="../js/panel.js"></script>
+</body>
+</html>
