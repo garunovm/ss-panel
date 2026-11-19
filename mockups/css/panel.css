@@ -372,3 +372,14 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .rt { display: inline-grid; place-items: center; min-width: 28px; height: 24px; border-radius: 6px; font-size: 14px; font-weight: 700; }
 .rt--y, .rt--e, .rt--v { font-size: 20px; } .rt--y { color: var(--green); } .rt--e { color: var(--amber-700); } .rt--v { color: var(--blue-700); }
 .rt--o { padding: 0 6px; background: var(--blue-50); color: var(--blue-700); font-size: 11px; } .rt--n { color: #9AA1B4; }
+
+/* ---------- log (admin-log.html) ---------- */
+.logtable .log-day th { padding: 10px 16px; background: var(--navy-50); color: var(--text-heading); font-size: 13px; text-transform: none; letter-spacing: 0; }
+.log-time { font-weight: 700; color: var(--text-heading); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.logtable td { vertical-align: top; }
+.logtable td:last-child { min-width: 320px; }
+.log-obj { color: var(--muted); font-size: 13px; }
+.logtable tr.is-bad td:first-child { box-shadow: inset 4px 0 0 var(--red); }
+.log-det { margin-top: 8px; }
+.log-det summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--link); min-height: 28px; }
+.log-det .diff { margin-top: 8px; }

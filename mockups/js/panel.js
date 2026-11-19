@@ -47,7 +47,7 @@
       { title: 'Система', items: [
         { id: 'users', t: 'Пользователи и роли', i: 'users', href: 'admin-users.html' },
         { id: 'api', t: 'Сайты и ключи API', i: 'api', href: '#' },
-        { id: 'log', t: 'Журнал', i: 'log', href: '#' }
+        { id: 'log', t: 'Журнал', i: 'log', href: 'admin-log.html' }
       ] }
     ],
     doctor: [
@@ -136,11 +136,16 @@
     var tag = '';
     var apply = function () {
       var q = search ? search.value.trim().toLowerCase() : '', n = 0;
-      tbl.querySelectorAll('tbody tr:not(.row-edit)').forEach(function (tr) {
+      tbl.querySelectorAll('tbody tr:not(.row-edit):not(.log-day)').forEach(function (tr) {
         var ok = (!tag || (' ' + tr.getAttribute('data-tags') + ' ').indexOf(' ' + tag + ' ') > -1) && (!q || tr.textContent.toLowerCase().indexOf(q) > -1);
         tr.hidden = !ok; if (ok) n++;
         var ed = tr.nextElementSibling; // inline edit row (dicts.js): hide with its row, keep closed state
         if (ed && ed.classList.contains('row-edit') && !ok) ed.hidden = true;
+      });
+      tbl.querySelectorAll('tbody tr.log-day').forEach(function (h) { // a day heading stays only if it has visible entries
+        var any = false, r = h.nextElementSibling;
+        while (r && !r.classList.contains('log-day')) { if (!r.hidden) any = true; r = r.nextElementSibling; }
+        h.hidden = !any;
       });
       if (count) count.textContent = 'Показано: ' + n;
     };
