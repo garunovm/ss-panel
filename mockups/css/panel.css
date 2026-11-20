@@ -578,3 +578,18 @@ body.is-sp-dragging .pi:not(.pi--break) { outline: 1px dashed var(--blue-500); o
 .visit__reason .select { width: auto; min-height: 32px; padding: 2px 8px; }
 
 body:has(.demo-dock) .p-content { padding-bottom: 96px; }
+
+/* ---------- run photos and materials ---------- */
+.medpath { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 14px; padding: 10px 12px; border-radius: var(--radius); background: var(--navy-50); font-size: 14px; }
+.phs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ph { position: relative; border-radius: 8px; overflow: hidden; border: 2px solid transparent; background: var(--navy-50); }
+.ph img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.ph__bar { display: flex; justify-content: space-between; gap: 6px; padding: 6px 8px; font-size: 12px; background: #fff; }
+.ph__bar label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.ph.is-cover { border-color: var(--accent); }
+.ph.is-hidden img { opacity: .3; filter: grayscale(1); }
+@media (max-width: 899px) { .phs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.org-field { padding: 12px 14px; border-radius: var(--radius); background: var(--navy-50); }
+.org-row, .org-main { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.org-partners { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 6px; }
+.org-partners li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fff; font-size: 14px; }

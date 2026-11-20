@@ -33,6 +33,7 @@
     <div class="tabs" role="tablist" aria-label="Разделы запуска" data-tabs>
       <button type="button" role="tab" data-tab="stu" aria-selected="true">Курсанты <span class="badge">18</span></button>
       <button type="button" role="tab" data-tab="docs" aria-selected="false" tabindex="-1">Документы <span class="badge badge--warn">3 из 8</span></button>
+      <button type="button" role="tab" data-tab="media" aria-selected="false" tabindex="-1">Фото и материалы</button>
     </div>
   </section>
   <div data-tabpanel="stu"><section class="card" aria-labelledby="hAtt">
@@ -106,6 +107,40 @@
       <div class="fbar" data-frdo-result hidden><span class="label">Что ответила ФИС ФРДО:</span><button class="btn btn--ok btn--sm" type="button" data-frdo-ok>✓ Принято</button><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: загрузите протокол ошибок — панель отметит строки">Есть ошибки — загрузить протокол</button></div>
     </section>
   </div>
+  <div data-tabpanel="media" hidden><div class="grid grid--side">
+    <section class="card" aria-labelledby="hMed">
+      <div class="card__head"><div><h2 id="hMed">Фото с курса</h2><p class="muted">Менеджер загрузил фото в Selectel — панель видит папку сама. Выберите обложку, скройте лишнее и опубликуйте.</p></div><span class="badge" data-med-st>не опубликованы</span></div>
+      <div class="card__body">
+        <div class="medpath"><span class="label">Папка в Selectel</span><code>courses/2026-10-23-advanced/photos/</code><span class="muted">48 фото (пример) · загружены 25.10 · уменьшенные копии для сайтов готовы</span><button class="linkbtn" type="button" data-toast="Панель перечитала папку: новых фото нет">обновить</button></div>
+        <ul class="phs"><li class="ph" data-ph><img src="../img/gal-1.jpg" alt="Лекционный зал"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover"> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li><li class="ph" data-ph><img src="../img/gal-2.jpg" alt="Демонстрация"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover"> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li><li class="ph" data-ph><img src="../img/gal-3.jpg" alt="Работа в группах"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover"> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li><li class="ph" data-ph><img src="../img/gal-4.jpg" alt="Менторы"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover"> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li><li class="ph" data-ph><img src="../img/gal-5.jpg" alt="Обсуждение"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover"> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li><li class="ph" data-ph><img src="../img/gal-6.jpg" alt="Курсанты"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover"> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li><li class="ph is-cover" data-ph><img src="../img/mentors.jpg" alt="Общее фото"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover" checked> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li><li class="ph" data-ph><img src="../img/place.jpg" alt="Тренинг-центр"><span class="ph__bar"><label class="ph__cover"><input type="radio" name="cover"> обложка</label><label class="ph__hide"><input type="checkbox" data-ph-hide> скрыть</label></span></li></ul>
+        <p class="muted" style="margin:10px 0 0">Показаны 8 из 48. <button class="linkbtn" type="button" data-toast="Макет: откроются все фото папки">Все фото</button></p>
+      </div>
+      <div class="fbar">
+        <label class="check"><input type="checkbox" checked> сайт ИХС</label><label class="check"><input type="checkbox" checked> сайт FD</label><label class="check"><input type="checkbox"> сайт RF</label>
+        <button class="btn btn--primary" type="button" data-med-pub>Опубликовать галерею</button>
+        <span class="muted">На сайтах — блок «Фотогалерея» на странице курса; обновится при следующем обмене.</span>
+      </div>
+    </section>
+    <aside class="grid">
+      <section class="card"><div class="card__head"><h2>Для SMM</h2></div><div class="card__body">
+        <p class="muted" style="margin:0 0 10px">Ссылка только на чтение: публичные фото этого курса, без папки «лаборатория» и скрытых.</p>
+        <div class="keynew__row"><code>https://…/courses/2026-10-23-advanced/photos/ (пример)</code><button class="btn btn--outline btn--sm" type="button" data-toast="Ссылка скопирована. Её получит и SMM в панели — роль «SMM»">Скопировать</button></div>
+        <button class="btn btn--outline btn--sm" type="button" style="margin-top:10px" data-toast="Макет: архив ZIP публичных фото для соцсетей">Скачать архивом</button>
+      </div></section>
+      <section class="card"><div class="card__head"><h2>Не публикуется</h2></div><div class="card__body">
+        <dl class="kv"><div><dt>Лаборатория</dt><dd><code>…/lab/</code> · 31 фото · только для учебной части, на сайты и SMM не уходит</dd></div></dl>
+        <p class="hint" style="margin:10px 0 0">Съёмка людей — согласие в договоре-оферте (уточнить у юриста). Анатомический материал на сайтах не показывается.</p>
+      </div></section>
+      <section class="card"><div class="card__head"><h2>Материалы участникам</h2></div><div class="card__body">
+        <ul class="next-steps" style="list-style:none;padding:0">
+          <li><b>До курса</b> · 3 файла · программа, как добраться, статьи</li>
+          <li><b>После курса</b> · презентации (12), записи лекций (6), анкета</li>
+        </ul>
+        <p class="hint" style="margin:10px 0 0">Папка <code>…/materials/</code>. Видят только участники запуска в кабинете на сайте ИХС — по временным ссылкам.</p>
+        <button class="btn btn--outline btn--sm" type="button" style="margin-top:8px" data-toast="Материалы «После курса» открыты 17 участникам">Открыть «После курса» участникам</button>
+      </div></section>
+    </aside>
+  </div></div>
 </main>
 </div>
 <script src="../js/panel.js"></script>

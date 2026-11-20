@@ -21,7 +21,7 @@
     tr.querySelectorAll('[data-row-toggle]').forEach(function (b) { b.setAttribute('aria-expanded', open ? 'true' : 'false'); b.textContent = open ? 'Свернуть' : 'Изменить'; });
     if (open) { syncRole(ed); var f = ed.querySelector('input,select,textarea'); if (f) f.focus(); }
   }
-  var SECTION = { admin: 'admin.*', manager: 'admin.*', study: 'admin.*', doctor: 'doctor.*', assistant: 'doctor.*' };
+  var SECTION = { admin: 'admin.*', manager: 'admin.*', study: 'admin.*', partner: 'admin.*', smm: 'admin.*', doctor: 'doctor.*', assistant: 'doctor.*' };
   function syncRole(scope) {
     var sel = scope.querySelector('[data-role-select]'); if (!sel) return;
     scope.querySelectorAll('[data-for-role]').forEach(function (x) { x.hidden = (' ' + x.getAttribute('data-for-role') + ' ').indexOf(' ' + sel.value + ' ') < 0; });

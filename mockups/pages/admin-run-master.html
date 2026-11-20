@@ -33,6 +33,7 @@
     <div class="tabs" role="tablist" aria-label="Разделы запуска" data-tabs>
       <button type="button" role="tab" data-tab="stu" aria-selected="true">Курсанты <span class="badge">12</span></button>
       <button type="button" role="tab" data-tab="docs" aria-selected="false" tabindex="-1">Документы <span class="badge">1 из 8</span></button>
+      <button type="button" role="tab" data-tab="media" aria-selected="false" tabindex="-1">Фото и материалы</button>
     </div>
   </section>
   <div data-tabpanel="stu"><section class="card" aria-labelledby="hSt">
@@ -91,6 +92,12 @@
     </section>
     
   </div>
+  <div data-tabpanel="media" hidden><section class="card" aria-labelledby="hMed"><div class="card__head"><div><h2 id="hMed">Фото и материалы</h2><p class="muted">Папки в Selectel для этого запуска уже созданы — после курса менеджер загружает туда фото, учебная часть — материалы участникам.</p></div></div>
+      <div class="card__body"><dl class="kv">
+        <div><dt>Фото (публично)</dt><dd><code>courses/2026-11-27-master/photos/</code> · пусто</dd></div>
+        <div><dt>Лаборатория (не публикуется)</dt><dd><code>courses/2026-11-27-master/lab/</code> · пусто</dd></div>
+        <div><dt>Материалы участникам</dt><dd><code>courses/2026-11-27-master/materials/</code> · «До курса»: 3 файла</dd></div>
+      </dl><p class="hint" style="margin:12px 0 0">Загрузка — через WinSCP / Cyberduck (защищённое соединение) или веб-панель Selectel; доступ у менеджеров уже есть.</p></div></section></div>
 </main>
 </div>
 <script src="../js/panel.js"></script>

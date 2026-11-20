@@ -188,4 +188,17 @@
       window.panelToast('Принято. У курсантов в кабинете — «Передано в ФИС ФРДО». Когда все строки приняты, запуск уходит в «Завершённые».');
     }
   });
+
+  /* run photos: cover, hide, publish (admin-run-*.html, tab «Фото и материалы») */
+  document.addEventListener('change', function (e) {
+    var h = e.target.closest('[data-ph-hide]'); if (h) { h.closest('[data-ph]').classList.toggle('is-hidden', h.checked); return; }
+    var c = e.target.closest('[data-ph] input[type=radio]');
+    if (c) { document.querySelectorAll('[data-ph]').forEach(function (x) { x.classList.toggle('is-cover', x.contains(c)); }); }
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-med-pub]'); if (!b) return;
+    var hidden = document.querySelectorAll('[data-ph].is-hidden').length, st = document.querySelector('[data-med-st]');
+    st.className = 'badge badge--ok'; st.textContent = '✓ опубликованы';
+    window.panelToast('Галерея опубликована' + (hidden ? ', скрыто фото: ' + hidden : '') + '. На сайтах ИХС и FD — при следующем обмене.');
+  });
 })();
