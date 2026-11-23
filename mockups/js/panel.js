@@ -37,15 +37,14 @@
       ] },
       { title: 'Институт', items: [
         { id: 'students', t: 'Курсанты', i: 'students', href: 'admin-students-all.html' },
-        { id: 'runs', t: 'Запуск курсов', i: 'docs', href: 'admin-runs.html', badge: '4' }
+        { t: 'Курсы', i: 'course', sub: [
+          { id: 'runs', t: 'Запуск курсов', i: 'docs', href: 'admin-runs.html', badge: '4' },
+          { id: 'programs', t: 'Программа курсов', i: 'program', href: 'admin-courses.html' }
+        ] }
       ] },
       { title: 'Специалисты', items: [
         { id: 'specialists', t: 'Специалисты', i: 'people', href: 'admin-specialists.html' },
         { id: 'schema', t: 'Схема карточки', i: 'schema', href: 'admin-card-schema.html' }
-      ] },
-      { title: 'Обучение', items: [
-        { id: 'courses', t: 'Курсы и запуски', i: 'course', href: 'admin-courses.html' },
-        { id: 'program', t: 'Программы', i: 'program', href: 'admin-program.html' }
       ] },
       { title: 'Справочники', items: [
         { id: 'clinics', t: 'Клиники и места', i: 'clinic', href: 'admin-clinics.html' },
@@ -80,12 +79,23 @@
     side.outerHTML = '<aside class="p-side" id="pSide" aria-label="Меню панели">' +
       '<a class="p-brand" href="index.html"><img src="../img/logo.png" alt=""><span><b>Институт хирургии стопы</b><span class="p-brand__app">' + (app === 'doctor' ? 'кабинет врача · doctor' : 'панель · admin') + '</span></span></a>' +
       '<nav class="p-nav">' + MENU[app].map(function (g) {
-        return '<div><h2>' + g.title + '</h2><ul>' + g.items.map(function (m) {
+        var link = function (m) {
           return '<li><a href="' + m.href + '"' + (m.id === page ? ' aria-current="page"' : '') + '>' + svg(m.i) + '<span>' + m.t + '</span>' +
             (m.badge ? '<span class="p-nav__badge" aria-label="' + m.badge + ' ждут">' + m.badge + '</span>' : '') + '</a></li>';
+        };
+        return '<div><h2>' + g.title + '</h2><ul>' + g.items.map(function (m, k) {
+          if (!m.sub) return link(m);
+          var id = 'pNavSub' + g.title.length + k; // sub-group: always open on its pages, toggles elsewhere
+          return '<li class="p-nav__grp"><button type="button" aria-expanded="true" aria-controls="' + id + '" data-nav-grp>' + svg(m.i) + '<span>' + m.t + '</span><span class="p-nav__chev" aria-hidden="true">▾</span></button>' +
+            '<ul class="p-nav__sub" id="' + id + '">' + m.sub.map(link).join('') + '</ul></li>';
         }).join('') + '</ul></div>';
       }).join('') + '</nav></aside>';
   }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-nav-grp]'); if (!b) return;
+    var open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open); document.getElementById(b.getAttribute('aria-controls')).hidden = !open;
+  });
   var head = document.querySelector('[data-shell="head"]');
   if (head) {
     var u = USER[document.body.getAttribute('data-user') || app];

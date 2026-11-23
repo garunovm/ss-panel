@@ -3,92 +3,127 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Курсы и запуски — Панель ИХС (макет)</title>
+<title>Программа курсов — Панель ИХС (макет)</title>
 <link rel="icon" href="../img/logo.png" type="image/png">
 <link rel="stylesheet" href="../css/panel.css">
 </head>
-<body data-app="admin" data-page="courses">
+<body data-app="admin" data-page="programs">
 <div data-shell="side"></div>
 <div class="p-main">
 <div data-shell="head"></div>
 
-<!-- admin.* → Курсы и запуски. ИХС owns every course; the panel is the source of truth (facts 2026-10-28).
-     Course = programme (permanent page /study/), run = dates; one 1С service per course (SURGERY_SERVICE_ID on
-     the site). A run has its own dates, place, status, seats, price and programme (site.plans.md
-     «Курс, запуски и услуга»). Runs below are from content\Курсы\2026 and the site mockups. -->
+<!-- admin.* → Институт → Курсы → Программа курсов (user, 2026-11-23): programmes grouped, each opens into its courses by date
+     («курс от 10.03.2026»). Programme = permanent course page /study/ with one 1С service; a course by date = run with its own
+     place, status, seats, price and day-by-day programme (editor: admin-program.html). ИХС owns every course (facts 2026-10-28).
+     Former «Курсы и запуски» + «Программы» from the removed menu group «Обучение». -->
 <main class="p-content" id="main">
   <div class="p-pagehead">
     <div>
-      <p class="p-crumbs">Обучение</p>
-      <h1>Курсы и запуски</h1>
-      <p class="muted" style="margin:4px 0 0">Курс — программа, запуск — конкретные даты. Отсюда курсы уходят на сайты ИХС, FD и RF; запись и оплата — на сайте ИХС.</p>
+      <p class="p-crumbs">Институт / Курсы</p>
+      <h1>Программа курсов</h1>
+      <p class="muted" style="margin:4px 0 0">Программы и их курсы по датам. Нажмите на программу — откроются её курсы; у курса — программа по дням и запуск (курсанты, документы).</p>
     </div>
     <div class="p-pagehead__actions">
-      <button class="btn btn--outline" type="button" data-toast="Макет: план запусков на год — копии выбранных запусков на новые даты">План на 2027</button>
-      <button class="btn btn--accent" type="button" data-toast="Макет: откроется новый курс">+ Курс</button>
+      <a class="btn btn--outline" href="admin-runs.html">← Запуск курсов</a>
+      <button class="btn btn--outline" type="button" data-toast="Макет: план на год — копии выбранных курсов на новые даты">План на 2027</button>
+      <button class="btn btn--accent" type="button" data-toast="Макет: откроется новая программа">+ Программа</button>
     </div>
   </div>
 
   <div class="grid grid--4" style="margin-bottom:20px">
-    <div class="card stat"><b>5</b><span>курсов</span></div>
-    <div class="card stat stat--accent"><b>4</b><span>запуска впереди</span></div>
+    <div class="card stat"><b>5</b><span>программ</span></div>
+    <div class="card stat stat--accent"><b>4</b><span>курса впереди</span></div>
     <div class="card stat"><b>27–28.11</b><span>ближайший: мастер-курс</span></div>
-    <div class="card stat"><b>1</b><span>программа не готова (базовый, декабрь)</span></div>
+    <div class="card stat"><b>1</b><span>программа по дням не готова (базовый, декабрь)</span></div>
   </div>
 
-  <section class="card" aria-labelledby="hC">
-    <h2 class="vh" id="hC">Курсы</h2>
+  <section class="card" aria-labelledby="hP">
+    <h2 class="vh" id="hP">Программы</h2>
     <div class="toolbar">
-      <label class="vh" for="q">Поиск курса</label>
-      <input class="input" id="q" type="search" placeholder="Название курса" data-search="#courses">
-      <div class="chips" role="group" aria-label="Направление" data-filter="#courses">
+      <div class="chips" role="group" aria-label="Направление" data-pgfilter>
         <button class="chip" type="button" data-tag="" aria-pressed="true">Все</button>
         <button class="chip" type="button" data-tag="surgery" aria-pressed="false">Хирургия стопы</button>
         <button class="chip" type="button" data-tag="ortho" aria-pressed="false">Ортопедия стопы</button>
       </div>
-      <span class="toolbar__count" data-count="#courses" aria-live="polite"></span>
+      <button class="linkbtn" type="button" data-pg-all>Раскрыть все</button>
     </div>
-    <div class="table-wrap">
-      <table class="table" id="courses">
-        <thead><tr><th scope="col">Курс</th><th scope="col">Услуга 1С</th><th scope="col">Запуски</th><th scope="col">Публикация</th></tr></thead>
-        <tbody>
-          <tr data-tags="surgery">
-            <td><div class="who"><span><a href="admin-course.html">Продвинутый курс по хирургии стопы</a><small>Хирургия стопы · кадаверный · 2 дня · руководитель Качесов А. В.</small></span></div></td>
-            <td>105 000 ₽<br><span class="muted">цена 1С, 2024</span></td>
-            <td><span class="muted">2026:</span> 9–10.04 ✓ · 12–13.06 ✓ · <a href="admin-program.html">23–24.10</a> ✓<br><span class="badge">2027 — не заведены</span></td>
-            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></td>
-          </tr>
-          <tr data-tags="surgery">
-            <td><div class="who"><span><a href="admin-course.html">Мастер-курс по хирургии стопы</a><small>Хирургия стопы · кадаверный · 2 дня</small></span></div></td>
-            <td>140 000 ₽</td>
-            <td><b>27–28.11.2026</b> <span class="badge badge--ok">идёт запись · 8 мест</span></td>
-            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></td>
-          </tr>
-          <tr data-tags="surgery">
-            <td><div class="who"><span><a href="admin-course.html">Базовый курс по хирургии стопы</a><small>Хирургия стопы · 2 дня</small></span></div></td>
-            <td>52 400 ₽</td>
-            <td><span class="muted">2026:</span> 14–15.03 ✓ · 19–20.09 ✓ · <b>19–20.12</b> <span class="badge badge--warn">программа в работе</span></td>
-            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span></td>
-          </tr>
-          <tr data-tags="surgery">
-            <td><div class="who"><span><a href="admin-course.html">Застарелые переломы пяточной кости</a><small>Хирургия стопы · 2 дня</small></span></div></td>
-            <td><span class="badge badge--bad">нет услуги в 1С</span></td>
-            <td><span class="muted">2026:</span> 26–27.09 ✓</td>
-            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf is-on">RF</span></span></td>
-          </tr>
-          <tr data-tags="ortho">
-            <td><div class="who"><span><a href="admin-course.html">Ортопедия стопы от «А» до «Я»</a><small>Ортопедия стопы · 2 дня · г. Жуковский</small></span></div></td>
-            <td>35 600 ₽</td>
-            <td><b>5–6.03.2027</b> <span class="badge badge--ok">идёт запись</span> · 4–5.06.2027 <span class="badge">черновик</span></td>
-            <td><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span></td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="pgs">
+      <details class="pg" data-dir="ortho" open>
+        <summary><span class="pg__name"><b>Ортопедия стопы от «А» до «Я»</b><small>Ортопедия стопы · 2 дня · г. Жуковский · услуга 1С 35 600 ₽</small></span>
+          <span class="pg__meta"><span class="badge badge--ok">идёт запись · 5–6.03.2027</span><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf">RF</span></span><span class="muted">4 курса</span></span></summary>
+        <div class="table-wrap"><table class="table pg__runs"><thead><tr><th scope="col">Курс</th><th scope="col">Где</th><th scope="col">Состояние</th><th scope="col">Программа по дням</th><th scope="col"><span class="vh">Действия</span></th></tr></thead><tbody>
+          <tr><td><b>курс от 10.03.2026</b></td><td>г. Жуковский</td><td><span class="badge">завершён · ФИС ФРДО 20.03</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+          <tr><td><b>курс от 15.05.2026</b></td><td>г. Жуковский</td><td><span class="badge">завершён · ФИС ФРДО 27.05</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+          <tr><td><b>курс от 05.03.2027</b></td><td>г. Жуковский</td><td><span class="badge badge--ok">идёт запись · 20 мест</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+          <tr><td><b>курс от 04.06.2027</b></td><td>г. Жуковский</td><td><span class="badge">черновик · не на сайтах</span></td><td><span class="muted">копия от 05.03.2027</span></td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button></td></tr>
+        </tbody></table></div>
+        <div class="pg__foot"><a class="linkbtn" href="admin-course.html">Карточка программы</a><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: новый курс копией последнего — даты сдвигаются, программа по дням копируется">+ Курс по дате</button></div>
+      </details>
+
+      <details class="pg" data-dir="surgery" open>
+        <summary><span class="pg__name"><b>Продвинутый курс по хирургии стопы</b><small>Хирургия стопы · кадаверный · 2 дня · руководитель Качесов А. В. · услуга 1С 105 000 ₽</small></span>
+          <span class="pg__meta"><span class="badge">2027 — не заведены</span><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span><span class="muted">3 курса</span></span></summary>
+        <div class="table-wrap"><table class="table pg__runs"><thead><tr><th scope="col">Курс</th><th scope="col">Где</th><th scope="col">Состояние</th><th scope="col">Программа по дням</th><th scope="col"><span class="vh">Действия</span></th></tr></thead><tbody>
+          <tr><td><b>курс от 09.04.2026</b></td><td>ГКБ № 67</td><td><span class="badge">завершён · ФИС ФРДО 21.04</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у курса от 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+          <tr><td><b>курс от 12.06.2026</b></td><td>РНИМУ</td><td><span class="badge">завершён · ФИС ФРДО 24.06</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у курса от 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+          <tr><td><b>курс от 23.10.2026</b></td><td>ГКБ № 67</td><td><span class="badge badge--warn">документы · протокол на подписи</span></td><td>✓ опубликована</td><td class="pg__act"><a class="btn btn--primary btn--sm" href="admin-program.html">Программа</a><a class="btn btn--outline btn--sm" href="admin-run-adv.html">Запуск</a></td></tr>
+        </tbody></table></div>
+        <div class="pg__foot"><a class="linkbtn" href="admin-course.html">Карточка программы</a><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: новый курс копией последнего — даты сдвигаются, программа по дням копируется">+ Курс по дате</button></div>
+      </details>
+
+      <details class="pg" data-dir="surgery">
+        <summary><span class="pg__name"><b>Мастер-курс по хирургии стопы</b><small>Хирургия стопы · кадаверный · 2 дня · услуга 1С 140 000 ₽</small></span>
+          <span class="pg__meta"><span class="badge badge--ok">идёт запись · 27–28.11.2026</span><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span><span class="muted">1 курс</span></span></summary>
+        <div class="table-wrap"><table class="table pg__runs"><thead><tr><th scope="col">Курс</th><th scope="col">Где</th><th scope="col">Состояние</th><th scope="col">Программа по дням</th><th scope="col"><span class="vh">Действия</span></th></tr></thead><tbody>
+          <tr><td><b>курс от 27.11.2026</b></td><td>ГКБ № 67</td><td><span class="badge badge--ok">идёт запись · 8 мест</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-run-master.html">Запуск</a></td></tr>
+        </tbody></table></div>
+        <div class="pg__foot"><a class="linkbtn" href="admin-course.html">Карточка программы</a><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: новый курс копией последнего — даты сдвигаются, программа по дням копируется">+ Курс по дате</button></div>
+      </details>
+
+      <details class="pg" data-dir="surgery">
+        <summary><span class="pg__name"><b>Базовый курс по хирургии стопы</b><small>Хирургия стопы · 2 дня · услуга 1С 52 400 ₽</small></span>
+          <span class="pg__meta"><span class="badge badge--warn">программа по дням в работе · 19–20.12</span><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd is-on">FD</span><span class="site site--rf is-on">RF</span></span><span class="muted">3 курса</span></span></summary>
+        <div class="table-wrap"><table class="table pg__runs"><thead><tr><th scope="col">Курс</th><th scope="col">Где</th><th scope="col">Состояние</th><th scope="col">Программа по дням</th><th scope="col"><span class="vh">Действия</span></th></tr></thead><tbody>
+          <tr><td><b>курс от 14.03.2026</b></td><td>ГКБ № 67</td><td><span class="badge">завершён · ФИС ФРДО 25.03</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+          <tr><td><b>курс от 19.09.2026</b></td><td>ГКБ № 67</td><td><span class="badge">завершён · ФИС ФРДО 29.09</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-run-done.html">Запуск</a></td></tr>
+          <tr><td><b>курс от 19.12.2026</b></td><td>ГКБ № 67</td><td><span class="badge badge--ok">идёт запись · 18 мест</span></td><td><span class="badge badge--warn">в работе</span></td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+        </tbody></table></div>
+        <div class="pg__foot"><a class="linkbtn" href="admin-course.html">Карточка программы</a><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: новый курс копией последнего — даты сдвигаются, программа по дням копируется">+ Курс по дате</button></div>
+      </details>
+
+      <details class="pg" data-dir="surgery">
+        <summary><span class="pg__name"><b>Застарелые переломы пяточной кости</b><small>Хирургия стопы · 2 дня · <span class="badge badge--bad">нет услуги в 1С</span></small></span>
+          <span class="pg__meta"><span class="badge">нет курсов впереди</span><span class="sites"><span class="site site--ss is-on">ИХС</span><span class="site site--fd">FD</span><span class="site site--rf is-on">RF</span></span><span class="muted">1 курс</span></span></summary>
+        <div class="table-wrap"><table class="table pg__runs"><thead><tr><th scope="col">Курс</th><th scope="col">Где</th><th scope="col">Состояние</th><th scope="col">Программа по дням</th><th scope="col"><span class="vh">Действия</span></th></tr></thead><tbody>
+          <tr><td><b>курс от 26.09.2026</b></td><td>ГКБ № 67</td><td><span class="badge">завершён · ФИС ФРДО 05.10</span></td><td>✓ готова</td><td class="pg__act"><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: программа по дням откроется так же, как у продвинутого 23.10">Программа</button><a class="btn btn--outline btn--sm" href="admin-runs.html">Запуск</a></td></tr>
+        </tbody></table></div>
+        <div class="pg__foot"><a class="linkbtn" href="admin-course.html">Карточка программы</a><button class="btn btn--outline btn--sm" type="button" data-toast="Макет: новый курс копией последнего — даты сдвигаются, программа по дням копируется">+ Курс по дате</button></div>
+      </details>
     </div>
-    <div class="legend"><span>✓ — запуск прошёл</span><span>Цена у запуска может отличаться от цены услуги (подтвердить с бухгалтерией)</span></div>
+    <div class="legend"><span>Программа — постоянная страница курса на сайтах и одна услуга 1С; курс по дате — свои место, места, цена и программа по дням.</span><span>Цена у курса по дате может отличаться от цены услуги (подтвердить с бухгалтерией).</span></div>
   </section>
 </main>
 </div>
 <script src="../js/panel.js"></script>
+<script>
+  /* Программа курсов: direction filter and «Раскрыть все» (mockup only) */
+  (function () {
+    var chips = document.querySelectorAll('[data-pgfilter] .chip');
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () {
+        chips.forEach(function (x) { x.setAttribute('aria-pressed', x === c); });
+        var tag = c.getAttribute('data-tag');
+        document.querySelectorAll('.pg').forEach(function (p) { p.hidden = !!tag && p.getAttribute('data-dir') !== tag; });
+      });
+    });
+    var all = document.querySelector('[data-pg-all]');
+    all.addEventListener('click', function () {
+      var open = all.textContent === 'Раскрыть все';
+      document.querySelectorAll('.pg').forEach(function (p) { p.open = open; });
+      all.textContent = open ? 'Свернуть все' : 'Раскрыть все';
+    });
+  })();
+</script>
 </body>
 </html>

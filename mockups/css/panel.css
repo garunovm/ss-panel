@@ -54,6 +54,14 @@ body[data-app="doctor"] .p-brand__app { color: #fff; }
 .p-nav svg { width: 18px; height: 18px; flex: none; opacity: .85; }
 .p-nav__badge { margin-left: auto; min-width: 22px; padding: 1px 7px; border-radius: 11px; background: var(--amber-400); color: var(--navy-800); font-size: 12px; text-align: center; }
 .p-nav a[href="#"] { opacity: .55; }
+.p-nav__grp > button { display: flex; align-items: center; gap: 10px; width: 100%; min-height: var(--tap); padding: 0 10px; border: 0; border-radius: 10px; background: none; color: #E6E9F3; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; text-align: left; }
+.p-nav__grp > button:hover { background: rgba(255,255,255,.07); color: #fff; }
+.p-nav__grp > button svg { width: 18px; height: 18px; flex: none; opacity: .85; }
+.p-nav__chev { margin-left: auto; transition: transform .15s; }
+.p-nav__grp > button[aria-expanded="false"] .p-nav__chev { transform: rotate(-90deg); }
+.p-nav__sub { margin: 2px 0 0 19px !important; padding-left: 8px !important; border-left: 1px solid rgba(255,255,255,.14); }
+.p-nav__sub a { font-weight: 600; }
+.donebar { margin: 0 0 16px; padding: 12px 16px; border-radius: var(--radius); background: var(--navy-50); border-left: 4px solid var(--accent); font-size: 14px; }
 .p-main { margin-left: var(--side-w); min-height: 100vh; }
 .p-head { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 24px; background: var(--card); border-bottom: 1px solid var(--line); }
 .p-head__left { display: flex; align-items: center; gap: 12px; min-width: 0; }
@@ -593,3 +601,19 @@ body:has(.demo-dock) .p-content { padding-bottom: 96px; }
 .org-row, .org-main { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .org-partners { list-style: none; margin: 4px 0; padding: 0; display: grid; gap: 6px; }
 .org-partners li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 6px 10px; border-radius: 8px; background: #fff; font-size: 14px; }
+
+/* ---------- Программа курсов: programmes grouped, courses by date (2026-11-23) ---------- */
+.pgs { display: grid; gap: 10px; padding: 0 20px 16px; }
+.pg { min-width: 0; border: 1px solid var(--line, #E3E6EF); border-radius: var(--radius); background: #fff; }
+.pg[open] { box-shadow: inset 4px 0 0 var(--accent); }
+.pg > summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 16px; cursor: pointer; list-style: none; }
+.pg > summary::-webkit-details-marker { display: none; }
+.pg > summary::before { content: '▸'; color: var(--accent); font-size: 14px; transition: transform .15s; }
+.pg[open] > summary::before { transform: rotate(90deg); }
+.pg__name { flex: 1 1 280px; min-width: 0; display: grid; gap: 2px; }
+.pg__name small { color: var(--muted, #5A6178); font-size: 13px; }
+.pg__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.pg .table-wrap { border-top: 1px solid var(--line, #E3E6EF); }
+.pg__act { white-space: nowrap; text-align: right; }
+.pg__act .btn + .btn { margin-left: 6px; }
+.pg__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 16px; border-top: 1px solid var(--line, #E3E6EF); }
