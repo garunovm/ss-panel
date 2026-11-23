@@ -95,12 +95,27 @@
         '<div class="drawer__body sc-body">' +
         '<section><h3>Личные данные</h3><dl class="kv">' +
         '<div><dt>Дата рождения</dt><dd>12.04.1985 (пример)</dd></div>' +
-        '<div><dt>СНИЛС</dt><dd><span data-pd>•••-•••-••• 01</span> <button class="linkbtn" type="button" data-pd-show>показать</button></dd></div>' +
+        '<div><dt>СНИЛС</dt><dd><span data-pd>•••-•••-••• 95</span> <button class="linkbtn" type="button" data-pd-show>показать</button> · скан есть · <span class="dk dk--ok">✓ контрольное число</span></dd></div>' +
+        '<div><dt>ИНН</dt><dd>7701••••••03 (пример) · по желанию — для справки на налоговый вычет</dd></div>' +
         '<div><dt>Телефон, e-mail</dt><dd>+7 (900) 000-00-00 · пример@example.ru</dd></div>' +
         '<div><dt>Место работы</dt><dd>место работы (пример), ' + esc(d.city) + '</dd></div>' +
-        '<div><dt>Документ об образовании</dt><dd>высшее — специалитет · 2008 · <span class="dk ' + DOCL[d.doc][0] + '">' + DOCL[d.doc][1] + '</span></dd></div>' +
+        '<div><dt>Документ об образовании</dt><dd>высшее — специалитет · Медицинский университет (пример) · «Лечебное дело», врач · серия и номер (пример) · выдан 30.06.2008 · скан есть · <span class="dk ' + DOCL[d.doc][0] + '">' + DOCL[d.doc][1] + '</span></dd></div>' +
+        '<div><dt>Выдаём</dt><dd>' + (d.doc === 'ok' ? '<span class="badge badge--ok">сертификат + удостоверение</span>' : '<span class="badge badge--warn">сертификат · удостоверение — после принятия СНИЛС и диплома</span>') + '</dd></div>' +
         '<div><dt>Кабинет на сайте ИХС</dt><dd>есть · вход по коду из письма</dd></div></dl>' +
-        '<p class="hint" style="margin:8px 0 0">Документы — один набор на все курсы. Просмотр личных данных пишется в журнал.</p></section>' +
+        '<p class="hint" style="margin:8px 0 0">Документы — один набор на все курсы. Просмотр личных данных пишется в журнал.</p>' +
+        '<button class="btn btn--outline btn--sm" type="button" style="margin-top:10px" data-sc-docs-open aria-expanded="false" aria-controls="scDocs">Внести документы</button>' +
+        '<form class="sc-docs" id="scDocs" data-sc-docs novalidate hidden><p class="muted" style="margin:0 0 10px">Курсант принёс документы лично — внесите за него. Курсант увидит их в кабинете; правка — в журнал.</p><div class="sc-docs__grid">' +
+          '<div class="field"><label for="sd-snils">СНИЛС</label><input class="input" id="sd-snils" inputmode="numeric" placeholder="123-456-789 01" data-snils aria-describedby="sd-snils-err"><span class="field__err" id="sd-snils-err" hidden></span></div>' +
+          '<div class="field"><label for="sd-inn">ИНН <span class="muted">(по желанию)</span></label><input class="input" id="sd-inn" inputmode="numeric" maxlength="12" data-inn aria-describedby="sd-inn-err"><span class="field__err" id="sd-inn-err" hidden></span></div>' +
+          '<div class="field"><label for="sd-level">Уровень образования</label><select class="select" id="sd-level"><option>Высшее — специалитет</option><option>Высшее — ординатура</option><option>Среднее профессиональное</option></select></div>' +
+          '<div class="field"><label for="sd-school">Учебное заведение</label><input class="input" id="sd-school"></div>' +
+          '<div class="field"><label for="sd-spec">Специальность / направление</label><input class="input" id="sd-spec"></div>' +
+          '<div class="field"><label for="sd-qual">Квалификация</label><input class="input" id="sd-qual"></div>' +
+          '<div class="field"><label for="sd-ser">Серия и номер диплома</label><input class="input" id="sd-ser"></div>' +
+          '<div class="field"><label for="sd-date">Дата выдачи</label><input class="input" id="sd-date" type="date"></div>' +
+          '<div class="field"><label for="sd-f1">Скан СНИЛС</label><input id="sd-f1" type="file" accept=".pdf,.jpg,.jpeg,.png"></div>' +
+          '<div class="field"><label for="sd-f2">Скан диплома</label><input id="sd-f2" type="file" accept=".pdf,.jpg,.jpeg,.png"></div>' +
+        '</div><div class="sc-docs__foot"><button class="btn btn--outline btn--sm" type="button" data-sc-docs-open>Отмена</button><button class="btn btn--primary btn--sm" type="submit">Сохранить и принять</button></div></form></section>' +
         '<section><h3>Курсы <span class="muted">' + d.runs.length + '</span></h3><ul class="sc-runs">' + d.runs.map(function (r) {
           return '<li><div><b>' + esc(r.c) + '</b> <span class="muted">' + esc(r.d) + '</span><small>заявка № ' + r.order + (r.cert ? ' · удостоверение № ' + r.cert : '') + '</small></div>' +
             '<div class="sc-runs__st"><span class="cr ' + RS[r.st][0] + '">' + RS[r.st][1] + '</span>' + (r.st === 'done' ? FRL[r.frdo] : '') + (r.page ? '<a class="linkbtn" href="' + r.page + '">к запуску</a>' : '') + '</div></li>';
@@ -124,8 +139,44 @@
     reg.addEventListener('keydown', function (e) { if (e.key === 'Enter' && e.target.matches('tr[data-id]')) openCard(e.target.getAttribute('data-id'), e.target); });
     document.addEventListener('click', function (e) {
       if (e.target.closest('[data-card-close]')) closeCard();
-      var s = e.target.closest('[data-pd-show]'); if (s) { s.previousElementSibling.textContent = '000-000-000 01 (пример)'; s.remove(); window.panelToast('Показано. Просмотр СНИЛС записан в журнал.'); }
+      var s = e.target.closest('[data-pd-show]'); if (s) { s.previousElementSibling.textContent = '112-233-445 95 (пример)'; s.remove(); window.panelToast('Показано. Просмотр СНИЛС записан в журнал.'); }
     });
+    /* documents entered by the manager: SNILS / INN check digits, then save (mockup) */
+    var digits = function (v) { return String(v).replace(/\D/g, ''); };
+    var snilsOk = function (v) {
+      var d = digits(v); if (d.length !== 11) return false;
+      if (+d.slice(0, 9) <= 1001998) return true;
+      var s = 0; for (var i = 0; i < 9; i++) s += +d[i] * (9 - i);
+      var c = s < 100 ? s : (s === 100 || s === 101) ? 0 : (s % 101 === 100 ? 0 : s % 101);
+      return c === +d.slice(9);
+    };
+    var innOk = function (v) {
+      var d = digits(v); if (!/^\d{12}$/.test(String(v).trim())) return false;
+      var w1 = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8], w2 = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8], a = 0, b = 0;
+      for (var i = 0; i < 10; i++) a += +d[i] * w1[i];
+      for (var j = 0; j < 11; j++) b += +d[j] * w2[j];
+      return a % 11 % 10 === +d[10] && b % 11 % 10 === +d[11];
+    };
+    var idMsg = function (inp) {
+      var v = inp.value.trim();
+      if (inp.hasAttribute('data-snils')) return !v ? 'Укажите номер СНИЛС.' : digits(v).length !== 11 ? 'СНИЛС — 11 цифр.' : snilsOk(v) ? '' : 'Контрольное число не сходится — проверьте цифры.';
+      return !v ? '' : !/^\d{12}$/.test(v) ? 'ИНН — 12 цифр.' : innOk(v) ? '' : 'Контрольные цифры ИНН не сходятся.';
+    };
+    var showId = function (inp) { var m = idMsg(inp), e = document.getElementById(inp.getAttribute('aria-describedby')); inp.setAttribute('aria-invalid', m ? 'true' : 'false'); e.textContent = m; e.hidden = !m; return !m; };
+    document.addEventListener('change', function (e) { var i = e.target.closest('[data-sc-docs] [data-snils], [data-sc-docs] [data-inn]'); if (i) showId(i); });
+    document.addEventListener('click', function (e) {
+      var o = e.target.closest('[data-sc-docs-open]'); if (!o) return;
+      var f = card.querySelector('[data-sc-docs]'), b = card.querySelector('button[data-sc-docs-open][aria-controls]'), open = f.hidden;
+      f.hidden = !open; b.setAttribute('aria-expanded', open); if (open) f.querySelector('input').focus(); else b.focus();
+    });
+    document.addEventListener('submit', function (e) {
+      var f = e.target.closest('[data-sc-docs]'); if (!f) return; e.preventDefault();
+      var bad = [].filter.call(f.querySelectorAll('[data-snils], [data-inn]'), function (i) { return !showId(i); });
+      if (bad.length) { bad[0].focus(); return; }
+      f.hidden = true; card.querySelector('button[data-sc-docs-open][aria-controls]').setAttribute('aria-expanded', 'false');
+      window.panelToast('Документы сохранены и приняты. Курсант увидит их в кабинете; правка записана в журнал.');
+    });
+    window.panelChecks = { snils: snilsOk, inn: innOk };
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !card.hidden) closeCard(); });
     if (location.hash && DATA[location.hash.slice(1)]) openCard(location.hash.slice(1));
   }
@@ -135,7 +186,8 @@
   if (att) att.addEventListener('change', function (e) {
     var cb = e.target.closest('[data-day]'); if (!cb) return;
     var tr = cb.closest('tr'), d = tr.querySelectorAll('[data-day]'), miss = [].filter.call(d, function (x) { return !x.checked; }).map(function (x) { return x.getAttribute('data-day'); });
-    var b = tr.querySelector('[data-att]'), c = tr.querySelector('[data-cert]');
+    var b = tr.querySelector('[data-att]'), c = tr.querySelector('[data-cert]'), gv = tr.querySelector('[data-give]');
+    if (gv) { gv.dataset.was = gv.dataset.was || gv.innerHTML; gv.innerHTML = miss.length ? '<span class="badge">сертификат</span>' : gv.dataset.was.indexOf('удостоверение') > -1 ? gv.dataset.was : '<span class="badge badge--ok">сертификат + удостоверение</span>'; }
     if (miss.length) { b.className = 'badge badge--bad'; b.textContent = 'не допущен — пропущен день ' + miss.join(', '); c.dataset.was = c.dataset.was || c.innerHTML; c.innerHTML = '<span class="muted">—</span>'; tr.classList.add('is-bad'); }
     else { b.className = 'badge badge--ok'; b.textContent = 'зачёт'; c.innerHTML = c.dataset.was && c.dataset.was.indexOf('№') > -1 ? c.dataset.was : '<span class="badge badge--warn">номер будет присвоен</span>'; tr.classList.remove('is-bad'); }
     var ok = [].filter.call(att.querySelectorAll('tbody tr'), function (r) { return !r.classList.contains('is-bad'); }).length;

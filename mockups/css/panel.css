@@ -617,3 +617,13 @@ body:has(.demo-dock) .p-content { padding-bottom: 96px; }
 .pg__act { white-space: nowrap; text-align: right; }
 .pg__act .btn + .btn { margin-left: 6px; }
 .pg__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 16px; border-top: 1px solid var(--line, #E3E6EF); }
+
+/* student card: documents entered by the manager (2026-11-23) */
+.sc-docs { margin-top: 12px; padding: 14px; border-radius: var(--radius); background: var(--navy-50); }
+.sc-docs__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; }
+.sc-docs .field { display: grid; gap: 4px; min-width: 0; }
+.sc-docs .field label { font-size: 13px; font-weight: 700; }
+.sc-docs input[type=file] { max-width: 100%; font-size: 13px; }
+.field__err { color: #B42318; font-size: 13px; font-weight: 600; }
+.sc-docs__foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+@media (max-width: 599px) { .sc-docs__grid { grid-template-columns: minmax(0, 1fr); } }
