@@ -10,7 +10,7 @@ source of truth for specialists, courses and their runs, clinics and appointment
 for listeners, documents and certificates. The three Bitrix sites (surgeryschool.ru, footdoctor.ru,
 rusfas.org) are showcases that read from it and send visitors' actions to it through the API.
 
-**State as of 2026-11-19: plans only, no code.** No build, lint or test commands yet. Add them here
+**State as of 2026-11-23: plans and a demo-pilot of mockups (`mockups/index.html`), no code.** No build, lint or test commands yet. Add them here
 when the Laravel app appears. The code layout and tooling follow FD's Task CRM
 (`../../../footdoctor/crm/repo`, Laravel 13, PHP 8.5, Docker + Traefik); read its `CLAUDE.md` before
 creating the app.
@@ -33,7 +33,7 @@ the lines tagged ИХС before planning. Later lines override earlier ones.
   `doctor.*` (doctors and assistants), `api.*` (exchange with the sites); later `clinic.*` (clinics'
   own cabinet). Traefik routes all hosts to the same container; each host has its own routes
   (`Route::domain`), guard and session cookie, and its own access rules in Traefik (e.g. `admin.*`
-  only from allowed IPs, rate limits on `api.*`). See `plans/overview.plans.md`.
+  only from allowed IPs, rate limits on `api.*`). See `plans/panel.plans.md`.
 - **One repo, sections as inner folders** (2026-11-19): `app/Admin`, `app/Doctor`, `app/Api`, later
   `app/Clinic`; shared models and logic in `app/Domain`. A section never reaches into another
   section's folder, only into `Domain`. To scale, the same code runs as a separate container per
@@ -66,9 +66,16 @@ the lines tagged ИХС before planning. Later lines override earlier ones.
 ## Workflow
 
 - **Agree each stage before acting**: describe what it does and wait for the answer.
-- **Keep plans in sync**: when a decision changes in any `*.plans.md`, update its line in
-  `overview.plans.md` in the same commit. Strike the old line through with the date:
-  `~~old~~ → new (YYYY-MM-DD)`. Next steps live only in `next.plans.md`. Plans are in Russian.
+- **Edit a decision where it is written** (facts 2026-11-23): a decision lives in its topic plan
+  (`plans/panel.plans.md`, `students`, `courses`, `specialists`, `clinics`, `access`, `api`); change it there in the same commit, striking the old wording through with the date:
+  `~~old~~ → new (YYYY-MM-DD)`. There is no overview file. Next steps live only in `next.plans.md`.
+  Plans are in Russian.
+- **Meetings** (facts 2026-11-23): one protocol per meeting in `meetings/` (`ГГГГ-ММ-ДД-кто.md`, template
+  `meetings/_шаблон.md`); open it before the meeting with questions from the plans; afterwards move the
+  decisions into the topic plans in the same commit. The protocol is history, not a source of decisions.
+- **Tasks and edits come on the form** from `Main Platform\workspace\forms.md` (facts 2026-11-21); an
+  incomplete form is returned with the empty fields marked.
+- **On «сегодня всё»** run the session-close check (facts 2026-11-23).
 - **Commit and push only when the user asks.**
 - **The user runs every server command.** Never ask for or print passwords or keys.
 - Personal data (dumps, exports, lists, logs) never goes into git.

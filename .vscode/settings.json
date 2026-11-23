@@ -1,0 +1,13 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#F0B020",
+    "titleBar.activeForeground": "#FFFFFF",
+    "titleBar.inactiveBackground": "#0068B0",
+    "titleBar.inactiveForeground": "#FFFFFFAA",
+    "activityBar.background": "#0068B0",
+    "activityBar.foreground": "#FFFFFF",
+    "statusBar.background": "#F0B020",
+    "statusBar.foreground": "#FFFFFF"
+  },
+  "window.title": "ИХС-панель · ${rootName}${separator}${activeEditorShort}"
+}
